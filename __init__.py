@@ -21,37 +21,51 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
 #
-"""Create and display tables from various data structures.
+"""Create table representations from various data structures.
 
 Various data structures are considered: Lists containing lists, dictionaries
 containing lists, lists containing dictionaries etc. The idea of this package
 is to find the natural table-like representation for each of the considered
-data structures.  The ultimate goal is to provide a function that can infer
-an appropiate table form for the given data structure.
+data structures.  The function :func:`autotable` is provided that can infer an
+appropiate table form the given data structure.
 
-For each data structure one can think of, functions to create a table-like
-representation shall be implemented, following a specific naming scheme:
+It has been attempted to find the natural tabular representation of many
+possible data structures. For each kind of data structure, specialized
+functions exist:
 
-    docl:
-        dictionary of lists, each representing a column of data
+    :func:`docl`:
+        dictionary of lists, where each list represents a named column
 
-    dorl:
-        dictionary of lists, each representing a row of data
+    :func:`dorl`:
+        dictionary of lists, where each list represents a named row
 
-    dod:
-        dictionary of dictionaries, forming a matrix with row and column titles
+    :func:`locl`:
+        list of lists, where each list represents a column
 
-    lord:
-        list of dictionaries, where each dictionary represents a row
+    :func:`lorl`:
+        list of lists, where each list represents a row
 
-    locd:
+    :func:`locd`:
         list of dictionaries, where each dictionary represents a column
 
-    ... to be continued ...
+    :func:`lord`:
+        list of dictionaries, where each dictionary represents a row
 
-It is not planned to implement any sorting or filter functions. The user has to
-pass data structures that are already ordered in the way he wishes. In the case
-of dictionaries, :class:`collections.OrderedDict` can be used."""
+    :func:`docd`:
+        dictionary of dictionaries, where each dictionary represents a named
+        column
+
+    :func:`dord`:
+        dictionary of dictionaries, where each dictionary represents a named
+        row
+
+There are no ambitions to implement any sorting or filter options.  Data
+structures have to be passed already in an ordered way. Tip: In the case of
+dictionaries, :class:`collections.OrderedDict` can be used to force a certain
+row or column order.
+
+For absolute fine control, the :class:`Table` class can be used directly to
+construct the table by hand."""
 # 2013-08-12 - 2013-08-13
 
 
@@ -83,318 +97,225 @@ If only one dictionary is given, and the keys are 2-tuples:
     the data is arranged accordingly in a sparse matrix style.
                                                          do2t
 
+If three lists are given, the first could contain the row index, the second the
+column index, and the third the respective data value.
+
 Sets can be treated like lists, but the elements will be unordered. (The
 responsibility remains with the user to first make a sorted list out of it.)
 Frozen sets and tuples are of course treated like their ``unfrozen''
 counterparts.
 
-There could be a general function "table" that chooses an appropriate table
-format automatically for the given data structure.
+There could be a general function "autotable" that chooses an appropriate table
+format automatically for a given data structure.
 
-All functions just return the string that would draw the table on the screen if
-printed. The terminal width can be set.
+All functions return just the string that would draw the table on the screen if
+printed. The terminal width can be set to cut the table.
 
-Could colors play some role?
+Could colors play some role? Should the module :mod:`ansicolor` be used to
+compute the actual length of the strings? (unwanted dependency...)
 
 A remapping of the row and column titles could be done.
 
-A ``LaTeX output mode'' could be implemented (as well as a HTML mode).
+A LaTeX output mode could be implemented (as well as a HTML mode).
 
 Numbers should be formattable and right-aligned.
 
 There could be support to print tree-like (hierarchical) data structures
-(although it does not really fall under tables).
+(although it is not really a table).
 
 Think about configurable row and column separators, major as well as minor
 ones, margin and padding, and frames.
 
-Option to print titles in uppercase.
+Option to print titles in uppercase? No, the user can do that himself.
 
-collections.OrderedDict may be used to force a specific row or column order
-when using dictionaries.
-
-
+collections.OrderedDict can be used to force a specific row or column order
+when using dictionaries. No sorting options are neccessary.
 
 """
 
-import collections
+
+DEFAULT_ALIGN = 'left'
 
 
-#default_cellformat = {float: '% *g', int: '% *g', long: '% *g'}
-#csep = ' '
-#
-#
-#def formatted(obj, width=0):
-#    """Return string representation of obj, according to the formats
-#    specification."""
-#    f = default_cellformat.get(type(obj), '%- *s')
-#    return f % (width, obj) if '*' in f else f % obj
+def autotable(data_structure, **kwargs):
+    """Generate table representation of the given data structure. Choose one of
+    the specialized functions *docl*, *dorl*, etc. based on the given data
+    structure. Keyword arguments are passed to :py:meth:`Table.make`."""
+    if isdict(data_structure):
+        if alldict(data_structure.values()):
+            # decide if rowwise or columnwise is best
+            func1 = docd
+            func2 = dord
+        elif alliter(data_structure.values()):
+            # decide if rowwise or columnwise is best
+            func1 = docl
+            func2 = dorl
+        else:
+            raise TypeError('must contain dictionaries or iterables')
+    elif isiter(data_structure):
+        if alldict(data_structure):
+            # decide if rowwise or columnwise is best
+            func1 = locd
+            func2 = lord
+        elif alliter(data_structure):
+            # decide if rowwise or columnwise is best
+            func1 = locl
+            func2 = lorl
+        else:
+            raise TypeError('must contain dictionaries or iterables')
+    else:
+        raise TypeError('must be of type dict or iterable')
+    s1 = func1(data_structure, **kwargs)
+    s2 = func2(data_structure, **kwargs)
+    width1 = len(s1.split('\n')[0])
+    width2 = len(s2.split('\n')[0])
+    if width1 > 80 and width2 <= 80:
+        func = func2
+    elif width2 > 80 and width1 <= 80:
+        func = func1
+    elif width1 > 80 and width2 > 80:
+        if width1 > width2:
+            func = func2
+        else:
+            func = func1
+    else:
+        if width1 > width2:
+            func = func1
+        else:
+            func = func2
+    return func(data_structure, **kwargs)
 
 
-#def docl(dict_of_lists, titles=False, cellformat=None):
-#    """Return table representation of the given dictionary of lists, where
-#    each list represents a named **column**. Include headrow if *titles* is
-#    *True*."""
-#
-#    coltitles, columns = zip(*dict_of_lists.iteritems())
-#    rowcount = len(max(columns, key=len)) if columns else 0
-#    colcount = len(coltitles)
-#
-#    # collect table data, row by row
-#    tabdata = []
-#    rind = 0
-#    for rind in xrange(rowcount):
-#        rowdata = []
-#        for clist in columns:
-#            cell = clist[rind] if rind < len(clist) else ''
-#            rowdata.append(cell)
-#        tabdata.append(rowdata)
-#
-#    # determine maximum width of each column
-#    maxcolwidths = []
-#    data = tabdata + [coltitles] if titles else tabdata
-#    for cind in xrange(colcount):
-#        maxcwidth = len(max(data,
-#                            key=lambda rdata: len(formatted(rdata[cind],
-#                            cellformat))))
-#        maxcolwidths.append(maxcwidth)
-#
-#    # build string
-#    rowstrings = []
-#    if titles:
-#        titlestrings = []
-#        for title, maxcwidth in zip(coltitles, maxcolwidths):
-#            titlestrings.append(formatted(title, maxcwidth))
-#        rowstring = csep.join(titlestrings)
-#        rowstrings.append(rowstring)
-#    for rdata in tabdata:
-#        cellstrings = []
-#        for cell, maxcwidth in zip(rdata, maxcolwidths):
-#            cellstrings.append(formatted(cell, maxcwidth))
-#        rowstring = csep.join(cellstrings)
-#        rowstrings.append(rowstring)
-#    out = '\n'.join(rowstrings)
-#    return out
-
-
-def docl(dict_of_lists, titles=False):
+def docl(dict_of_lists, **kwargs):
     """Return table representation of the given dictionary of lists, where each
-    list represents a named **column**. Include headrow if *titles* is
-    *True*."""
+    list represents a named **column**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
 
     table = Table()
     for title, data in dict_of_lists.iteritems():
         table.append_column(data, title)
-    return table.display(titles=titles)
+    return table.make(**kwargs)
 
 
-def lod(list_of_dicts, head=False, sort=None, reverse=False, sep=' ',
-        columns=None):
-    """Create a table out of a given list of dictionaries *list_of_dicts*,
-    where each dictionary represents one table row. The dictionary keys contain
-    the column titles. Return string.
+def dorl(dict_of_lists, **kwargs):
+    """Return table representation of the given dictionary of lists, where each
+    list represents a named **row**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
 
-    If *head* is *True*, show head row containing the column titles. *sep* is
-    the string used for vertical separation between the cells. Filter columns
-    by specifying a list *columns* of specific column titles.
-
-    The rows can be sorted by setting *sort* to a certain column title. Higher
-    order sort criteria can be set by setting *sort* with a list of column
-    titles. The sort direction can be reversed using *reverse*."""
-
-    # find all dictionary keys
-    if columns is not None:
-        allkeys = columns
-    else:
-        allkeys = []
-        for d in list_of_dicts:
-            for key in d.keys():
-                if key not in allkeys:
-                    allkeys.append(key)
-
-    # find width of each column
-    widths = {}
-    for key in allkeys:
-        if key not in widths:
-            widths[key] = 0
-        if head:
-            widths[key] = len(str(key))
-        for d in list_of_dicts:
-            if key in d:
-                width = len(str(d[key]))
-                if width > widths[key]:
-                    widths[key] = width
-
-    # sort
-    if sort is not None:
-        if not isiterable(sort):
-            sort = [sort]
-        for key in sort:
-            list_of_dicts.sort(key=items_of(key), reverse=reverse)
-
-    # construct the table
-    rows = []
-    if head:
-        row = sep.join(str(key).ljust(widths[key]) for key in allkeys)
-        rows.append(row)
-    for d in list_of_dicts:
-        cells = []
-        for key in allkeys:
-            if key in d:
-                cells.append(str(d[key]).ljust(widths[key]))
-            else:
-                cells.append(' '*widths[key])
-        row = sep.join(cells)
-        rows.append(row)
-    out = '\n'.join(rows)
-    return out
+    table = Table()
+    for title, data in dict_of_lists.iteritems():
+        table.append_row(data, title)
+    return table.make(**kwargs)
 
 
-def tol(list_of_lists, sortind=None, floatformat='%g', intformat='%g'):
+def locl(list_of_lists, **kwargs):
+    """Return table representation of the given list of lists, where each list
+    represents a **column**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
 
-    """Create a table from a given tuple of lists. Each list represents one
-    column. Return string."""
-    raise NotImplementedError
-
-
-def lot(list_of_tuples, sortind=None, floatformat='%g', intformat='%g'):
-
-    """Create a table from the given list of tuples. Each tuple represents one
-    line of the table. Return string."""
-    raise NotImplementedError
+    table = Table()
+    for data in list_of_lists:
+        table.append_column(data)
+    return table.make(**kwargs)
 
 
-def dod(dict_of_dicts, cols=None, rows=None, coltitles=True, fformat='%g',
-        iformat='%g', lformat='%g', cformat='%g+%gj', colsep=' ',
-        maxwidth=None):
+def lorl(list_of_lists, **kwargs):
+    """Return table representation of the given list of lists, where each list
+    represents a **row**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
 
-    """Create a table from a given dictionary containing dictionaries, each
-    nested dictionary representing a row. The keys of the outer dictionary
-    become the row titles, while the keys of the nested dictionaries become the
-    column titles. Return string.
-
-    By default, rows and columns are sorted by column title (alphabetically).
-    Alternatively, a certain order (and subset) can be defined using "cols" and
-    "rows" (list of strings). Column titles can be switched off using
-    "coltitles".
-
-    The arguments "fformat", "iformat", "lformat" and "cformat" control the
-    formatting of floats, integers, longs and complex numbers, respectively.
-    The columns are separated by one space by default, which can be changed
-    using "colsep". With "maxwidth", the output can be cut after a certain
-    number of characters in each line, e.g. setting it to 80 could improve the
-    output in most shell windows, but certain columns that do not fit into this
-    width may then not be visible.
-
-    """
-    # 2013-08-12 - 2013-08-13
-
-    # find string representation and alignment for all data
-    strrep = {}
-    align_right = {}
-    for rowtit, row in dict_of_dicts.iteritems():
-        strrep[rowtit] = {}
-        align_right[rowtit] = {}
-        for coltit, cell in row.iteritems():
-            strrep[rowtit][coltit], align_right[rowtit][coltit] = \
-                _formatcell(cell, fformat=fformat, iformat=iformat,
-                            lformat=lformat, cformat=cformat)
-
-    # get column titles
-    if cols is None:
-        coltits = set()
-        for row in dict_of_dicts.values():
-            coltits.update(row.keys())
-        coltits = list(coltits)
-        coltits.sort(key=lambda tit: tit.lower())
-    else:
-        coltits = cols
-
-    # determine column widths
-    rowtitw = len(max(strrep.keys(), key=len)) if strrep else 0
-    colw = {}
-    for coltit in coltits:
-        if not coltit in colw:
-            colw[coltit] = 0
-        for row in strrep.values():
-            if coltit in row:
-                if coltitles and len(coltit) > colw[coltit]:
-                    colw[coltit] = len(coltit)
-                if len(row[coltit]) > colw[coltit]:
-                    colw[coltit] = len(row[coltit])
-
-    # build the table
-    tablines = []
-
-    if coltitles:
-        rowcells = [' '*rowtitw]
-        for coltit in coltits:
-            cellstr = '%-*s' % (colw[coltit], coltit)
-            rowcells.append(cellstr)
-        tablines.append(colsep.join(rowcells))
-
-    # get row titles
-    if rows is None:
-        rowtits = strrep.keys()
-        rowtits.sort(key=lambda tit: tit.lower())
-    else:
-        rowtits = rows
-
-    for rowtit in rowtits:
-        if not rowtit in strrep:
-            continue
-        row = strrep[rowtit]
-        rowcells = ['%-*s' % (rowtitw, rowtit)]
-        for coltit in coltits:
-            if coltit in row:
-                if align_right[rowtit][coltit]:
-                    cellstr = '%*s' % (colw[coltit], row[coltit])
-                else:
-                    cellstr = '%-*s' % (colw[coltit], row[coltit])
-            else:
-                cellstr = ' '*colw[coltit]
-            rowcells.append(cellstr)
-        tablines.append(colsep.join(rowcells)[:maxwidth])
-
-    return '\n'.join(tablines)
+    table = Table()
+    for data in list_of_lists:
+        table.append_row(data)
+    return table.make(**kwargs)
 
 
-def autotable(data_structure, **kwargs):
-    pass
+def locd(list_of_dicts, **kwargs):
+    """Return table representation of the given list of dictionaries, where
+    each dictionary represents a **column**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
+    allrowtitles = []
+    for coldata in list_of_dicts:
+        for rowtitle in coldata.keys():
+            if not rowtitle in allrowtitles:
+                allrowtitles.append(rowtitle)
+    table = Table()
+    for colind, coldata in enumerate(list_of_dicts):
+        for rowind, rowtitle in enumerate(allrowtitles):
+            if rowtitle in coldata:
+                table.insert_cell((rowind, colind), coldata[rowtitle])
+    for rowind, rowtitle in enumerate(allrowtitles):
+        table.rowtitles[rowind] = rowtitle
+    return table.make(**kwargs)
 
 
-#def _formatcell(cell, fformat='%g', iformat='%g', cformat='%g+%gj',
-#                lformat='%g'):
-#    """Return string representation and alignment of cell data."""
-#    # 2013-08-12
-#
-#    kwargs = dict(fformat=fformat, iformat=iformat, cformat=cformat,
-#                  lformat=lformat)
-#    if isinstance(cell, float):
-#        return fformat % cell, True
-#    elif isinstance(cell, int):
-#        return iformat % cell, True
-#    elif isinstance(cell, long):
-#        return lformat % cell, True
-#    elif isinstance(cell, complex):
-#        return cformat % (cell.real, cell.imag), True
-#    elif isinstance(cell, (list, tuple, set, frozenset)):
-#        return ', '.join([_formatcell(item, **kwargs)[0] for item in cell]), \
-#               False
-#    elif isinstance(cell, dict):
-#        return ', '.join(_formatcell(key, **kwargs)[0] +
-#                         '=' + _formatcell(value, **kwargs)[0]
-#                         for key, value in cell.iteritems()), False
-#    else:
-#        return str(cell), False
+def lord(list_of_dicts, **kwargs):
+    """Return table representation of the given list of dictionaries, where
+    each dictionary represents a **row**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
+    allcoltitles = []
+    for rowdata in list_of_dicts:
+        for coltitle in rowdata.keys():
+            if not coltitle in allcoltitles:
+                allcoltitles.append(coltitle)
+    table = Table()
+    for rowind, rowdata in enumerate(list_of_dicts):
+        for colind, coltitle in enumerate(allcoltitles):
+            if coltitle in rowdata:
+                table.insert_cell((rowind, colind), rowdata[coltitle])
+    for colind, coltitle in enumerate(allcoltitles):
+        table.coltitles[colind] = coltitle
+    return table.make(**kwargs)
 
 
-def isiterable(obj):
+def docd(dict_of_dicts, **kwargs):
+    """Return table representation of the given dictionary of dictionaries,
+    where each dictionary represents a **column**. Keyword arguments are passed
+    to :py:meth:`Table.make`."""
+    allrowtitles = []
+    for coldata in dict_of_dicts.values():
+        for rowtitle in coldata.keys():
+            if not rowtitle in allrowtitles:
+                allrowtitles.append(rowtitle)
+    table = Table()
+    allcoltitles = dict_of_dicts.keys()
+    for colind, (coltitle, coldata) in enumerate(dict_of_dicts.iteritems()):
+        table.coltitles[colind] = coltitle
+        for rowtitle, celldata in coldata.iteritems():
+            rowind = allrowtitles.index(rowtitle)
+            table.insert_cell((rowind, colind), celldata)
+    for rowind, rowtitle in enumerate(allrowtitles):
+        table.rowtitles[rowind] = rowtitle
+    return table.make(**kwargs)
+
+
+def dord(dict_of_dicts, **kwargs):
+    """Return table representation of the given dictionary of dictionaries,
+    where each dictionary represents a **row**. Keyword arguments are passed to
+    :py:meth:`Table.make`."""
+    allcoltitles = []
+    for rowdata in dict_of_dicts.values():
+        for coltitle in rowdata.keys():
+            if not coltitle in allcoltitles:
+                allcoltitles.append(coltitle)
+    table = Table()
+    allrowtitles = dict_of_dicts.keys()
+    for rowind, (rowtitle, rowdata) in enumerate(dict_of_dicts.iteritems()):
+        table.rowtitles[rowind] = rowtitle
+        for coltitle, celldata in rowdata.iteritems():
+            colind = allcoltitles.index(coltitle)
+            table.insert_cell((rowind, colind), celldata)
+    for colind, coltitle in enumerate(allcoltitles):
+        table.coltitles[colind] = coltitle
+    return table.make(**kwargs)
+
+
+def isiter(obj):
     """Check if an object is iterable. Return True for lists, tuples,
     dictionaries and numpy arrays (all objects that possess an __iter__
     method).  Return False for scalars (float, int, etc.), strings, bool and
     None."""
-    # 2011-09-13
+    # 2011-09-13 - 2014-07-20
     # copied from tb.misc.isiterable on 2014-07-10
     # former tb.isiterable from 2011-01-27
     # former mytools.isiterable
@@ -404,6 +325,25 @@ def isiterable(obj):
     # return isinstance(obj, basestring) or getattr(obj, '__iter__', False)
     # I found this to be better:
     return not getattr(obj, '__iter__', False) is False
+
+
+def alliter(seq):
+    for item in seq:
+        if not isiter(item):
+            return False
+    return True
+
+
+def isdict(obj):
+    """Check if the given object *obj* is a dictionar."""
+    return hasattr(obj, 'iteritems')
+
+
+def alldict(seq):
+    for item in seq:
+        if not isdict(item):
+            return False
+    return True
 
 
 class items_of(object):
@@ -442,9 +382,6 @@ def all_of_type(seq, dtype):
     return True
 
 
-DEFAULT_ALIGN = 'left'
-
-
 class CellDict(dict):
     """A mapping ``(row index, column index) --> cell object``."""
 
@@ -466,7 +403,7 @@ class CellDict(dict):
         dict.__delitem__(self, key)
 
     def _check_key(self, key):
-        if not isiterable(key):
+        if not isiter(key):
             raise TypeError('key must be iterable')
         if len(key) != 2:
             raise ValueError('key must have length 2')
@@ -568,12 +505,12 @@ class AlignDict(dict):
 
 class Table(object):
 
-    def __init__(self, cells=CellDict(), rowtitles=TitleDict(),
-                 coltitles=TitleDict(), colalign=AlignDict()):
-        self._cells = cells
-        self._rowtitles = rowtitles
-        self._coltitles = coltitles
-        self._colalign = colalign
+    def __init__(self, cells=None, rowtitles=None, coltitles=None,
+                 colalign=None):
+        self._cells = CellDict() if cells is None else cells
+        self._rowtitles = TitleDict() if rowtitles is None else rowtitles
+        self._coltitles = TitleDict() if coltitles is None else coltitles
+        self._colalign = AlignDict() if colalign is None else colalign
 
     @property
     def cells(self):
@@ -719,8 +656,10 @@ class Table(object):
         rowind = bottom + 1 if bottom is not None else 0
         self.insert_row(rowind, data=data, title=title, startcol=startcol)
 
-    _mergedefault = {('-', ' '): '-', ('=', ' '): '=',
-                     ('-', ''): '-', ('=', ''): '='}
+    _mergedefault = {('|', '-'): '+',
+                     ('|', '='): '+',
+                     ('|', '_'): '+',
+                     ('|', '.'): '+'}
     _mergetop = _mergedefault.copy()
     _mergetop.update({})
     _mergebottom = _mergedefault.copy()
@@ -740,43 +679,144 @@ class Table(object):
     _mergetopright.update({})
 
     _mergecenter = _mergedefault.copy()
-    _mergecenter.update({('-', '|'): '+', ('=', '|'): '#'})
+    _mergecenter.update({})
 
     def _merge(self, hsep, vsep, pos='center'):
+        if not hsep:
+            return ''
+        if not vsep:
+            return ''
+        if hsep == ' ':
+            return vsep
+        if vsep == ' ':
+            return hsep
         mergedict = getattr(self, '_merge'+pos)
         return mergedict.get((hsep, vsep), ' ')
 
-    def make(self, titles=False, bh='', bv='', padding=0, ph=0, pv=0,
-             autoalign=True, rowtitles=False, coltitles=False, vcsep=' ',
-             hcsep='', vtsep=' ', htsep='', borderleft='', borderright='',
-             bordertop='', borderbottom='', paddingleft=0, paddingright=0,
-             paddingtop=0, paddingbottom=0):
+    def make(self, titles=False, hb='', vb='', padding=0, hp=0, vp=0,
+             autoalign=True, rowtitles=False, coltitles=False, hc=' ', vc='',
+             ht=' ', vt='', borderleft='', borderright='', bordertop='',
+             borderbottom='', paddingleft=0, paddingright=0, paddingtop=0,
+             paddingbottom=0, width=None, pretty=False):
 
+        """Create table representation.
+
+
+        The following formatting options exist:
+
+            *rowtitles*:
+                Show row titles. Default: False
+
+            *coltitles*:
+                Show column titles. Default: False
+
+            *hc*:
+                Horizontal cell delimeter. Default: ' '
+
+            *vc*:
+                Vertical cell delimeter. Default: ''
+
+            *ht*:
+                Horizontal delimeter between row titles and data cells.
+                Default: ' '
+
+            *vt*:
+                Vertical delimeter between column titles and data cells.
+                Default: ''
+
+            *borderleft*:
+                Character used as the left table border. Default: ''
+
+            *borderright*:
+                Character used as the right table border. Default: ''
+
+            *bordertop*:
+                Character used as the top table border. Default: ''
+
+            *borderbottom*:
+                Character used as the bottom table border. Default: ''
+
+            *paddingleft*:
+                Left cell padding (number of space characters). Default: 0
+
+            *paddingright*:
+                Right cell padding (number of space characters). Default: 0
+
+            *paddingtop*:
+                Top cell padding (number of space characters). Default: 0
+
+            *paddingbottom*:
+                Bottom cell padding (number of space characters). Default: 0
+
+            *autoalign*:
+                If *True*, infer alignment of columns from the column data.
+                only for those columns for which no alignment has been set.
+                Default: *True*
+
+            *width*:
+                If not *None*, set the width of the table. The rest of the
+                characters will be cut from each line. Should be set to the
+                terminal width for wide tables. Default: *None*
+
+            *pretty*:
+                If *True*, try to prettyprint borders and delimeters by using
+                unicode box drawing symbols. May not be available on all
+                systems.
+
+
+        The following shortcuts exist:
+
+            *titles*:
+                Show row and column titles. Overrides *rowtitles* and
+                *coltitles*. Default: False
+
+            *hb*:
+                Set horizontal borders. Overrides *bordertop* and
+                *borderbottom*. Default: ''
+
+            *vb*:
+                Set vertical borders. Overrides *borderleft* and *borderright*.
+                Default: ''
+
+            *padding*:
+                Set cell padding (number of space characters). Overrides
+                *paddingtop*, *paddingbottom*, *paddingleft* and
+                *paddingright*. Default: 0
+
+            *hp*:
+                Set horizontal cell padding (number of space characters).
+                Overrides *paddingleft* and *paddingright*. Default: 0
+
+            *vp*:
+                Set vertical cell padding (number of space characters).
+                Overrides *paddingtop* and *paddingbottom*. Default: 0"""
         #
         # to do:
-        # - respect vertical padding
-        # - cut table representation according to terminal width
+        # - enable prettyprinting using box-drawing unicode characters
+        # - support alignment for complex numbers
+        # - support scientific number format
+        # - support alignment for scientific number format
         #
 
         if titles:
             rowtitles = True
             coltitles = True
 
-        if bh:
-            bordertop = bh
-            borderbottom = bh
+        if hb:
+            bordertop = hb
+            borderbottom = hb
 
-        if bv:
-            borderleft = bv
-            borderright = bv
+        if vb:
+            borderleft = vb
+            borderright = vb
 
-        if pv:
-            paddingtop = pv
-            paddingbottom = pv
+        if vp:
+            paddingtop = vp
+            paddingbottom = vp
 
-        if ph:
-            paddingleft = ph
-            paddingright = ph
+        if hp:
+            paddingleft = hp
+            paddingright = hp
 
         if padding:
             paddingleft = padding
@@ -784,13 +824,13 @@ class Table(object):
             paddingtop = padding
             paddingbottom = padding
 
-        if not isinstance(vcsep, basestring) or len(vcsep) > 1:
+        if not isinstance(hc, basestring) or len(hc) > 1:
             raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(vtsep, basestring) or len(vtsep) > 1:
+        if not isinstance(vc, basestring) or len(vc) > 1:
             raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(hcsep, basestring) or len(hcsep) > 1:
+        if not isinstance(ht, basestring) or len(ht) > 1:
             raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(htsep, basestring) or len(htsep) > 1:
+        if not isinstance(vt, basestring) or len(vt) > 1:
             raise ValueError, 'must be a string no longer than one character'
         if not isinstance(borderleft, basestring) or len(borderleft) > 1:
             raise ValueError, 'must be a string no longer than one character'
@@ -850,52 +890,88 @@ class Table(object):
         if bordertop:
             row = self._bordertopstring(allrowstrings, borderleft, borderright,
                                         bordertop, rowtitles, paddingleft,
-                                        paddingright, vcsep, vtsep)
+                                        paddingright, hc, ht)
             rows.append(row)
 
         # column titles
+        colwidths = self.colwidths(withtitle=coltitles, colalign=colalign)
         if coltitles:
+            for i in xrange(paddingtop):
+                row = self._padrow(rowtitles, borderleft, borderright,
+                                   paddingleft, paddingright, hc, ht,
+                                   colwidths)
+                rows.append(row)
             row = self._coltitlesrowstring(rowtitles, borderleft,
                                             borderright, paddingleft,
-                                            paddingright, vcsep, vtsep)
+                                            paddingright, hc, ht)
             rows.append(row)
-            if htsep:
+            for i in xrange(paddingtop):
+                row = self._padrow(rowtitles, borderleft, borderright,
+                                   paddingleft, paddingright, hc, ht,
+                                   colwidths)
+                rows.append(row)
+            if vt:
                 row = self._coltitlessepstring(allrowstrings, rowtitles,
                                             borderleft, borderright,
-                                            paddingleft, paddingright, htsep,
-                                            vcsep, vtsep)
+                                            paddingleft, paddingright, vt,
+                                            hc, ht)
                 rows.append(row)
 
         # main rows (first)
         if len(allrowstrings) > 0:
             rowtitle = self.rowtitles.get(self.top(), ' '*rowtitlescolwidth)
+            if not rowtitle:
+                rowtitle = ' '*rowtitlescolwidth
+            for i in xrange(paddingtop):
+                row = self._padrow(rowtitles, borderleft, borderright,
+                                   paddingleft, paddingright, hc, ht,
+                                   colwidths)
+                rows.append(row)
             row = self._datarowstring(allrowstrings[0], rowtitle, borderleft,
                                       borderright, rowtitles, paddingleft,
-                                      paddingright, vcsep, vtsep)
+                                      paddingright, hc, ht)
             rows.append(row)
+            for i in xrange(paddingtop):
+                row = self._padrow(rowtitles, borderleft, borderright,
+                                   paddingleft, paddingright, hc, ht,
+                                   colwidths)
+                rows.append(row)
 
         # main rows (remaining)
         for rowind, rowstrings in enumerate(allrowstrings[1:], 1):
             rowtitle = self.rowtitles.get(rowind, ' '*rowtitlescolwidth)
-            if hcsep:
+            if vc:
                 row = self._datasepstring(rowstrings, rowtitles, borderleft,
                                           borderright, paddingleft,
-                                          paddingright, hcsep, vcsep, vtsep)
-
-
+                                          paddingright, vc, hc, ht)
+                rows.append(row)
+            for i in xrange(paddingtop):
+                row = self._padrow(rowtitles, borderleft, borderright,
+                                   paddingleft, paddingright, hc, ht,
+                                   colwidths)
                 rows.append(row)
             row = self._datarowstring(rowstrings, rowtitle, borderleft,
                                       borderright, rowtitles, paddingleft,
-                                      paddingright, vcsep, vtsep)
+                                      paddingright, hc, ht)
             rows.append(row)
+            for i in xrange(paddingtop):
+                row = self._padrow(rowtitles, borderleft, borderright,
+                                   paddingleft, paddingright, hc, ht,
+                                   colwidths)
+                rows.append(row)
 
         # bottom border
         if borderbottom:
             row = self._borderbottomstring(allrowstrings, borderleft,
                                            borderright, borderbottom,
                                            rowtitles, paddingleft,
-                                           paddingright, vcsep, vtsep)
+                                           paddingright, hc, ht)
             rows.append(row)
+
+        # cut rows according to terminal width
+        if width is not None:
+            for i in xrange(len(rows)):
+                rows[i] = rows[i][:width]
 
         # return complete string representation of the table
         return '\n'.join(rows)
@@ -911,68 +987,68 @@ class Table(object):
         return len(lines), len(lines[0]) if lines else 0
 
     def _coltitlessepstring(self, allrowstrings, rowtitles, borderleft,
-                            borderright, paddingleft, paddingright, htsep,
-                            vcsep, vtsep):
+                            borderright, paddingleft, paddingright, vt,
+                            hc, ht):
         row = ''
 
         # left
         if borderleft:
-            row += self._merge(borderleft, htsep, 'left')
+            row += self._merge(borderleft, vt, 'left')
         if rowtitles:
-            row += htsep*paddingleft
-            row += htsep*self.rowtitlescolwidth()
-            row += htsep*paddingright
-            row += self._merge(htsep, vtsep, 'center')
+            row += vt*paddingleft
+            row += vt*self.rowtitlescolwidth()
+            row += vt*paddingright
+            row += self._merge(ht, vt, 'center')
 
         # main
         parts = []
         for rowstring in allrowstrings[0]:
             part = ''
-            part += htsep*paddingleft
-            part += htsep*len(rowstring)
-            part += htsep*paddingright
+            part += vt*paddingleft
+            part += vt*len(rowstring)
+            part += vt*paddingright
             parts.append(part)
-        sep = self._merge(htsep, vcsep, 'center')
+        sep = self._merge(hc, vt, 'center')
         row += sep.join(parts)
 
         # right
         if borderright:
-            row += self._merge(htsep, borderright, 'right')
+            row += self._merge(borderright, vt, 'right')
 
         return row
 
     def _datasepstring(self, rowstrings, rowtitles, borderleft, borderright,
-                       paddingleft, paddingright, hcsep, vcsep, vtsep):
+                       paddingleft, paddingright, vc, hc, ht):
         row = ''
 
         # left
         if borderleft:
-            row += self._merge(borderleft, hcsep, 'left')
+            row += self._merge(borderleft, vc, 'left')
         if rowtitles:
-            row += hcsep*paddingleft
-            row += hcsep*self.rowtitlescolwidth()
-            row += hcsep*paddingright
-            row += self._merge(hcsep, vtsep, 'center')
+            row += vc*paddingleft
+            row += vc*self.rowtitlescolwidth()
+            row += vc*paddingright
+            row += self._merge(ht, vc, 'center')
 
         # main
         parts = []
         for rowstring in rowstrings:
             part = ''
-            part += hcsep*paddingleft
-            part += hcsep*len(rowstring)
-            part += hcsep*paddingright
+            part += vc*paddingleft
+            part += vc*len(rowstring)
+            part += vc*paddingright
             parts.append(part)
-        sep = self._merge(hcsep, vcsep, 'center')
+        sep = self._merge(hc, vc, 'center')
         row += sep.join(parts)
 
         # right
         if borderright:
-            row += self._merge(hcsep, borderright, 'right')
+            row += self._merge(borderright, vc, 'right')
 
         return row
 
-    def _coltitlesrowstring(self, rowtitles, borderleft, borderright,
-                            paddingleft, paddingright, vcsep, vtsep):
+    def _padrow(self, rowtitles, borderleft, borderright, paddingleft,
+                paddingright, hc, ht, colwidths):
         row = ''
 
         # left
@@ -982,7 +1058,36 @@ class Table(object):
             row += ' '*paddingleft
             row += ' '*self.rowtitlescolwidth()
             row += ' '*paddingright
-            row += vtsep
+            row += ht
+
+        # main
+        parts = []
+        for colwidth in colwidths:
+            part = ''
+            part += ' '*paddingleft
+            part += ' '*colwidth
+            part += ' '*paddingright
+            parts.append(part)
+        row += hc.join(parts)
+
+        # right
+        if borderright:
+            row += borderright
+
+        return row
+
+    def _coltitlesrowstring(self, rowtitles, borderleft, borderright,
+                            paddingleft, paddingright, hc, ht):
+        row = ''
+
+        # left
+        if borderleft:
+            row += borderleft
+        if rowtitles:
+            row += ' '*paddingleft
+            row += ' '*self.rowtitlescolwidth()
+            row += ' '*paddingright
+            row += ht
 
         # main
         parts = []
@@ -992,7 +1097,7 @@ class Table(object):
             part += coltitle
             part += ' '*paddingright
             parts.append(part)
-        row += vcsep.join(parts)
+        row += hc.join(parts)
 
         # right
         if borderright:
@@ -1002,17 +1107,17 @@ class Table(object):
 
     def _bordertopstring(self, allrowstrings, borderleft, borderright,
                          bordertop, rowtitles, paddingleft, paddingright,
-                         vcsep, vtsep):
+                         hc, ht):
         row = ''
 
         # left
         if borderleft:
-            row += self._merge(bordertop, borderleft, 'topleft')
+            row += self._merge(borderleft, bordertop, 'topleft')
         if rowtitles:
             row += bordertop*paddingleft
             row += bordertop*self.rowtitlescolwidth()
             row += bordertop*paddingright
-            row += self._merge(bordertop, vtsep, 'top')
+            row += self._merge(ht, bordertop, 'top')
 
         # main
         parts = []
@@ -1022,28 +1127,28 @@ class Table(object):
             part += bordertop*len(rowstring)
             part += bordertop*paddingright
             parts.append(part)
-        sep = self._merge(bordertop, vcsep, 'top')
+        sep = self._merge(hc, bordertop, 'top')
         row += sep.join(parts)
 
         # right
         if borderright:
-            row += self._merge(bordertop, borderright, 'topright')
+            row += self._merge(borderright, bordertop, 'topright')
 
         return row
 
     def _borderbottomstring(self, allrowstrings, borderleft, borderright,
                          borderbottom, rowtitles, paddingleft, paddingright,
-                         vcsep, vtsep):
+                         hc, ht):
         row = ''
 
         # left
         if borderleft:
-            row += self._merge(borderbottom, borderleft, 'bottomleft')
+            row += self._merge(borderleft, borderbottom, 'bottomleft')
         if rowtitles:
             row += borderbottom*paddingleft
             row += borderbottom*self.rowtitlescolwidth()
             row += borderbottom*paddingright
-            row += self._merge(borderbottom, vtsep, 'bottom')
+            row += self._merge(ht, borderbottom, 'bottom')
 
         # main
         parts = []
@@ -1053,17 +1158,17 @@ class Table(object):
             part += borderbottom*len(rowstring)
             part += borderbottom*paddingright
             parts.append(part)
-        sep = self._merge(borderbottom, vcsep, 'bottom')
+        sep = self._merge(hc, borderbottom, 'bottom')
         row += sep.join(parts)
 
         # right
         if borderright:
-            row += self._merge(borderbottom, borderright, 'bottomright')
+            row += self._merge(borderright, borderbottom, 'bottomright')
 
         return row
 
     def _datarowstring(self, rowstrings, rowtitle, borderleft, borderright,
-                       rowtitles, paddingleft, paddingright, vcsep, vtsep):
+                       rowtitles, paddingleft, paddingright, hc, ht):
         row = ''
 
         # left
@@ -1073,7 +1178,7 @@ class Table(object):
             row += ' '*paddingleft
             row += rowtitle
             row += ' '*paddingright
-            row += vtsep
+            row += ht
 
         # main
         parts = []
@@ -1083,7 +1188,7 @@ class Table(object):
             part += rowstring
             part += ' '*paddingright
             parts.append(part)
-        row += vcsep.join(parts)
+        row += hc.join(parts)
 
         # right
         if borderright:
