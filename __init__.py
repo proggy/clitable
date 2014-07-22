@@ -21,7 +21,8 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
 #
-"""Create table representations from various data structures.
+"""Create table representations from various data structures, using either
+simple ASCII characters or unicode box-drawing characters.
 
 Various data structures are considered: Lists containing lists, dictionaries
 containing lists, lists containing dictionaries etc. The idea of this package
