@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>easytable.presets &mdash; easytable v0.1-beta documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'v0.1-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="easytable v0.1-beta documentation" href="../../index.html" />
+    <link rel="up" title="easytable" href="../easytable.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">easytable v0.1-beta documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../easytable.html" accesskey="U">easytable</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for easytable.presets</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># Copyright notice</span>
+<span class="c"># ----------------</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2014 Daniel Jung</span>
+<span class="c"># Contact: djungbremen@gmail.com</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or modify it</span>
+<span class="c"># under the terms of the GNU General Public License as published by the Free</span>
+<span class="c"># Software Foundation; either version 2 of the License, or (at your option)</span>
+<span class="c"># any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful, but WITHOUT</span>
+<span class="c"># ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span>
+<span class="c"># FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</span>
+<span class="c"># more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License along</span>
+<span class="c"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c"># 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.</span>
+<span class="c">#</span>
+<span class="sd">&quot;&quot;&quot;This module contains presets for formatting tables.</span>
+
+<span class="sd">The presets are dictionaries which contain keyword arguments. To apply a</span>
+<span class="sd">preset, the dictionary of the user&#39;s choice has to be passed to</span>
+<span class="sd">:py:meth:`easytable.Table.make` or one of the shortcut functions</span>
+<span class="sd">:func:`easytable.autotable`, :func:`easytable.docl` etc. using a double-star</span>
+<span class="sd">notation (**). Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; data = dict(a=[1, 2, 3], b=[1, 2], c=[1])</span>
+<span class="sd">    &gt;&gt;&gt; print easytable.docl(d, coltitles=1, **easytable.presets.asciielegant)</span>
+<span class="sd">    ===========</span>
+<span class="sd">     a   c   b</span>
+<span class="sd">    -----------</span>
+<span class="sd">     1   1   1</span>
+<span class="sd">     2       2</span>
+<span class="sd">     3</span>
+<span class="sd">    ===========</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">plain</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># using ASCII characters only</span>
+<span class="n">asciielegant</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hb</span><span class="o">=</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">asciimatrix</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hb</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">vb</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">hc</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">asciibox</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hb</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">vb</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">asciicross</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">asciicross2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">asciidense</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">hb</span><span class="o">=</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">vb</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">asciiheader</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ht</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">hb</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">vb</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># using unicode box drawing characters (0x2500..0x2580)</span>
+<span class="n">elegant</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hb</span><span class="o">=</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">elegant2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hb</span><span class="o">=</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">border</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">hc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">border</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fatbox</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">border</span><span class="o">=</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">doublebox</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">border</span><span class="o">=</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cross</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cross2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dense</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vc</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">ht</span><span class="o">=</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ht</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">vt</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">border</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">easytable v0.1-beta documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../easytable.html" >easytable</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Daniel Jung.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
