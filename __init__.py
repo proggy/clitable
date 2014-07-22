@@ -68,6 +68,7 @@ For absolute fine control, the :class:`Table` class can be used directly to
 construct the table by hand."""
 # 2013-08-12 - 2013-08-13
 
+import presets
 
 """
 
@@ -658,28 +659,137 @@ class Table(object):
 
     _mergedefault = {('|', '-'): '+',
                      ('|', '='): '+',
-                     ('|', '_'): '+',
-                     ('|', '.'): '+'}
-    _mergetop = _mergedefault.copy()
-    _mergetop.update({})
-    _mergebottom = _mergedefault.copy()
-    _mergebottom.update({})
-    _mergeleft = _mergedefault.copy()
-    _mergeleft.update({})
-    _mergeright = _mergedefault.copy()
-    _mergeright.update({})
+                     ('|', '~'): '+',
+                     (':', '-'): '+',
+                     (':', '='): '+',
+                     (':', '~'): '+',
+                     (';', '-'): '+',
+                     (';', '='): '+',
+                     (';', '~'): '+',
+                     ('!', '-'): '+',
+                     ('!', '='): '+',
+                     ('!', '~'): '+',
+                     ('I', '-'): '+',
+                     ('I', '='): '+',
+                     ('I', '~'): '+',
+                     ('*', '*'): '*',
+                     ('#', '#'): '#',
+                     ('@', '@'): '@',
+                     ('+', '+'): '+',
+                     ('/', '/'): '/',
+                     ('\\', '\\'): '\\',
+                     ('>', '>'): '>',
+                     ('<', '<'): '<',
+                     ('.', '.'): '.',
+                     (':', ':'): ':',
+                     (';', ';'): ';',
+                     (':', '.'): ':',
+                     ('"', '"'): '"',
+                     ('z', 'z'): 'z',
+                     ('Z', 'Z'): 'Z',
+                     ('o', 'o'): 'o',
+                     ('O', 'O'): 'O',
+                     ('\'', '\''): '\''}
 
-    _mergebottomleft = _mergedefault.copy()
-    _mergebottomleft.update({})
-    _mergebottomright = _mergedefault.copy()
-    _mergebottomright.update({})
     _mergetopleft = _mergedefault.copy()
-    _mergetopleft.update({})
     _mergetopright = _mergedefault.copy()
-    _mergetopright.update({})
-
+    _mergebottomleft = _mergedefault.copy()
+    _mergebottomright = _mergedefault.copy()
+    _mergeleft = _mergedefault.copy()
+    _mergeright = _mergedefault.copy()
+    _mergetop = _mergedefault.copy()
+    _mergebottom = _mergedefault.copy()
     _mergecenter = _mergedefault.copy()
-    _mergecenter.update({})
+
+    _pieces_light_horizontal = [unichr(9474), unichr(9478),
+                                unichr(9482), unichr(9550)]
+    _pieces_light_vertical = [unichr(9472), unichr(9476),
+                              unichr(9480), unichr(9548)]
+    _pieces_heavy_horizontal = [unichr(9475), unichr(9479),
+                                unichr(9483), unichr(9551)]
+    _pieces_heavy_vertical = [unichr(9473), unichr(9477),
+                              unichr(9481), unichr(9549)]
+    _pieces_double_horizontal = [unichr(9553)]
+    _pieces_double_vertical = [unichr(9552)]
+
+    for hpiece in _pieces_light_horizontal:
+        for vpiece in _pieces_light_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9484)
+            _mergetopright[(hpiece, vpiece)] = unichr(9488)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9492)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9496)
+            _mergeleft[(hpiece, vpiece)] = unichr(9500)
+            _mergeright[(hpiece, vpiece)] = unichr(9508)
+            _mergetop[(hpiece, vpiece)] = unichr(9516)
+            _mergebottom[(hpiece, vpiece)] = unichr(9524)
+            _mergecenter[(hpiece, vpiece)] = unichr(9532)
+    for hpiece in _pieces_light_horizontal:
+        for vpiece in _pieces_heavy_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9485)
+            _mergetopright[(hpiece, vpiece)] = unichr(9489)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9493)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9497)
+            _mergeleft[(hpiece, vpiece)] = unichr(9501)
+            _mergeright[(hpiece, vpiece)] = unichr(9509)
+            _mergetop[(hpiece, vpiece)] = unichr(9519)
+            _mergebottom[(hpiece, vpiece)] = unichr(9527)
+            _mergecenter[(hpiece, vpiece)] = unichr(9535)
+    for hpiece in _pieces_heavy_horizontal:
+        for vpiece in _pieces_light_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9486)
+            _mergetopright[(hpiece, vpiece)] = unichr(9490)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9494)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9498)
+            _mergeleft[(hpiece, vpiece)] = unichr(9504)
+            _mergeright[(hpiece, vpiece)] = unichr(9512)
+            _mergetop[(hpiece, vpiece)] = unichr(9520)
+            _mergebottom[(hpiece, vpiece)] = unichr(9528)
+            _mergecenter[(hpiece, vpiece)] = unichr(9538)
+    for hpiece in _pieces_heavy_horizontal + _pieces_double_horizontal:
+        for vpiece in _pieces_heavy_vertical + _pieces_double_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9487)
+            _mergetopright[(hpiece, vpiece)] = unichr(9491)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9495)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9499)
+            _mergeleft[(hpiece, vpiece)] = unichr(9507)
+            _mergeright[(hpiece, vpiece)] = unichr(9515)
+            _mergetop[(hpiece, vpiece)] = unichr(9523)
+            _mergebottom[(hpiece, vpiece)] = unichr(9531)
+            _mergecenter[(hpiece, vpiece)] = unichr(9547)
+
+    for hpiece in _pieces_double_horizontal:
+        for vpiece in _pieces_double_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9556)
+            _mergetopright[(hpiece, vpiece)] = unichr(9559)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9562)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9565)
+            _mergeleft[(hpiece, vpiece)] = unichr(9568)
+            _mergeright[(hpiece, vpiece)] = unichr(9571)
+            _mergetop[(hpiece, vpiece)] = unichr(9574)
+            _mergebottom[(hpiece, vpiece)] = unichr(9577)
+            _mergecenter[(hpiece, vpiece)] = unichr(9580)
+    for hpiece in _pieces_double_horizontal:
+        for vpiece in _pieces_light_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9555)
+            _mergetopright[(hpiece, vpiece)] = unichr(9558)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9561)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9564)
+            _mergeleft[(hpiece, vpiece)] = unichr(9567)
+            _mergeright[(hpiece, vpiece)] = unichr(9570)
+            _mergetop[(hpiece, vpiece)] = unichr(9573)
+            _mergebottom[(hpiece, vpiece)] = unichr(9576)
+            _mergecenter[(hpiece, vpiece)] = unichr(9579)
+    for hpiece in _pieces_light_horizontal:
+        for vpiece in _pieces_double_vertical:
+            _mergetopleft[(hpiece, vpiece)] = unichr(9554)
+            _mergetopright[(hpiece, vpiece)] = unichr(9557)
+            _mergebottomleft[(hpiece, vpiece)] = unichr(9560)
+            _mergebottomright[(hpiece, vpiece)] = unichr(9563)
+            _mergeleft[(hpiece, vpiece)] = unichr(9566)
+            _mergeright[(hpiece, vpiece)] = unichr(9569)
+            _mergetop[(hpiece, vpiece)] = unichr(9572)
+            _mergebottom[(hpiece, vpiece)] = unichr(9575)
+            _mergecenter[(hpiece, vpiece)] = unichr(9578)
 
     def _merge(self, hsep, vsep, pos='center'):
         if not hsep:
@@ -695,9 +805,9 @@ class Table(object):
 
     def make(self, titles=False, hb='', vb='', padding=0, hp=0, vp=0,
              autoalign=True, rowtitles=False, coltitles=False, hc=' ', vc='',
-             ht=' ', vt='', borderleft='', borderright='', bordertop='',
-             borderbottom='', paddingleft=0, paddingright=0, paddingtop=0,
-             paddingbottom=0, width=None, pretty=False):
+             ht=' ', vt='', border='', borderleft='', borderright='',
+             bordertop='', borderbottom='', paddingleft=0, paddingright=0,
+             paddingtop=0, paddingbottom=0, width=None, box=True):
 
         """Create table representation.
 
@@ -711,17 +821,17 @@ class Table(object):
                 Show column titles. Default: False
 
             *hc*:
-                Horizontal cell delimeter. Default: ' '
+                Horizontal cell delimiter. Default: ' '
 
             *vc*:
-                Vertical cell delimeter. Default: ''
+                Vertical cell delimiter. Default: ''
 
             *ht*:
-                Horizontal delimeter between row titles and data cells.
+                Horizontal delimiter between row titles and data cells.
                 Default: ' '
 
             *vt*:
-                Vertical delimeter between column titles and data cells.
+                Vertical delimiter between column titles and data cells.
                 Default: ''
 
             *borderleft*:
@@ -758,10 +868,13 @@ class Table(object):
                 characters will be cut from each line. Should be set to the
                 terminal width for wide tables. Default: *None*
 
-            *pretty*:
-                If *True*, try to prettyprint borders and delimeters by using
-                unicode box drawing symbols. May not be available on all
-                systems.
+            *box*:
+                If *True*, interpret certain characters in the options *hc*,
+                *vc*, *ht*, *vt*, *borderleft*, *borderright*, *bordertop*,
+                *borderbottom*, *hb* and *vb* as unicode box drawing characters
+                (0x2500..0x2580). May not be available on all systems. See the
+                section "special delimiters" for a list of characters that are
+                interpreted. Default: *True*
 
 
         The following shortcuts exist:
@@ -789,7 +902,55 @@ class Table(object):
 
             *vp*:
                 Set vertical cell padding (number of space characters).
-                Overrides *paddingtop* and *paddingbottom*. Default: 0"""
+                Overrides *paddingtop* and *paddingbottom*. Default: 0
+
+            *border*:
+                Set borders. Overrides *borderleft*, *borderright*, *bordertop*
+                and *borderbottom*. Default: ''
+
+
+        Special delimiters:
+
+        As long as *box* is *True* (default), certain characters in the options
+        *hc*, *vc*, *ht*, *vt*, *borderleft*, *borderright*, *bordertop*,
+        *borderbottom*, *hb* and *vb* are interpreted as unicode box drawing
+        characters (0x2500..0x2580). May not be available on all systems.
+
+        Further information can be found at
+        http://en.wikipedia.org/wiki/Box-drawing_character
+        http://unicode.org/charts/PDF/U2500.pdfhttp://unicode.org/charts/PDF
+        /U2500.pdfhttp://unicode.org/charts/PDF/U2500.pdf
+
+        The following characters are interpreted:
+
+            "l":
+                light single line
+
+            "h":
+                heavy single line
+
+            "d":
+                double line
+
+            "2":
+                light double dash
+
+            "u":
+                heavy double dash
+
+            "3":
+                light triple dash
+
+            "t":
+                heavy triple dash
+
+            "4":
+                light quadruple dash
+
+            "q":
+                heavy quadruple dash
+        """
+
         #
         # to do:
         # - enable prettyprinting using box-drawing unicode characters
@@ -824,6 +985,12 @@ class Table(object):
             paddingtop = padding
             paddingbottom = padding
 
+        if border:
+            borderleft = border
+            borderright = border
+            bordertop = border
+            borderbottom = border
+
         if not isinstance(hc, basestring) or len(hc) > 1:
             raise ValueError, 'must be a string no longer than one character'
         if not isinstance(vc, basestring) or len(vc) > 1:
@@ -840,6 +1007,27 @@ class Table(object):
             raise ValueError, 'must be a string no longer than one character'
         if not isinstance(borderbottom, basestring) or len(borderbottom) > 1:
             raise ValueError, 'must be a string no longer than one character'
+
+        # interpret shortcuts for unicode box drawing characters
+        _boxchars_horizontal = {'l': unichr(9472), 'h': unichr(9473),
+                                'd': unichr(9552), '2': unichr(9548),
+                                'u': unichr(9549), '3': unichr(9476),
+                                't': unichr(9477), '4': unichr(9480),
+                                'q': unichr(9481)}
+        _boxchars_vertical = {'l': unichr(9474), 'h': unichr(9475),
+                              'd': unichr(9553), '2': unichr(9550),
+                              'u': unichr(9551), '3': unichr(9478),
+                              't': unichr(9479), '4': unichr(9482),
+                              'q': unichr(9483)}
+        hc = _boxchars_vertical.get(str(hc), hc)
+        ht = _boxchars_vertical.get(str(ht), ht)
+        vc = _boxchars_horizontal.get(str(vc), vc)
+        vt = _boxchars_horizontal.get(str(vt), vt)
+        borderleft = _boxchars_vertical.get(str(borderleft), borderleft)
+        borderright = _boxchars_vertical.get(str(borderright), borderright)
+        bordertop = _boxchars_horizontal.get(str(bordertop), bordertop)
+        borderbottom = _boxchars_horizontal.get(str(borderbottom),
+                                                borderbottom)
 
         startcol = self.left()
         if startcol is None:
@@ -1094,7 +1282,7 @@ class Table(object):
         for coltitle in self.coltitlestrings():
             part = ''
             part += ' '*paddingleft
-            part += coltitle
+            part += str(coltitle)
             part += ' '*paddingright
             parts.append(part)
         row += hc.join(parts)
@@ -1176,7 +1364,7 @@ class Table(object):
             row += borderleft
         if rowtitles:
             row += ' '*paddingleft
-            row += rowtitle
+            row += str(rowtitle)
             row += ' '*paddingright
             row += ht
 
