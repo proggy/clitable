@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>easytable.presets &mdash; easytable v0.1-beta documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'v0.1-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="easytable v0.1-beta documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">easytable v0.1-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-easytable.presets">
+<span id="easytable-presets"></span><h1>easytable.presets<a class="headerlink" href="#module-easytable.presets" title="Permalink to this headline">¶</a></h1>
+<p>This module contains presets for formatting tables.</p>
+<p>The presets are dictionaries which contain keyword arguments. To apply a
+preset, the dictionary of the user&#8217;s choice has to be passed to
+<a class="reference internal" href="index.html#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">easytable.Table.make()</span></tt></a> or one of the shortcut functions
+<a class="reference internal" href="index.html#easytable.autotable" title="easytable.autotable"><tt class="xref py py-func docutils literal"><span class="pre">easytable.autotable()</span></tt></a>, <a class="reference internal" href="index.html#easytable.docl" title="easytable.docl"><tt class="xref py py-func docutils literal"><span class="pre">easytable.docl()</span></tt></a> etc. using a double-star
+notation (**). Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">easytable</span><span class="o">.</span><span class="n">docl</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">coltitles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">easytable</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">asciielegant</span><span class="p">)</span>
+<span class="go">===========</span>
+<span class="go"> a   c   b</span>
+<span class="go">-----------</span>
+<span class="go"> 1   1   1</span>
+<span class="go"> 2       2</span>
+<span class="go"> 3</span>
+<span class="go">===========</span>
+</pre></div>
+</div>
+<div class="section" id="presets-using-unicode-box-drawing-characters">
+<h2>Presets using unicode box-drawing characters<a class="headerlink" href="#presets-using-unicode-box-drawing-characters" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="easytable.presets.elegant">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">elegant</tt><a class="headerlink" href="#easytable.presets.elegant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.elegant2">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">elegant2</tt><a class="headerlink" href="#easytable.presets.elegant2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.matrix">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">matrix</tt><a class="headerlink" href="#easytable.presets.matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.box">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">box</tt><a class="headerlink" href="#easytable.presets.box" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.fatbox">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">fatbox</tt><a class="headerlink" href="#easytable.presets.fatbox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.doublebox">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">doublebox</tt><a class="headerlink" href="#easytable.presets.doublebox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.cross">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">cross</tt><a class="headerlink" href="#easytable.presets.cross" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.cross2">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">cross2</tt><a class="headerlink" href="#easytable.presets.cross2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.dense">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">dense</tt><a class="headerlink" href="#easytable.presets.dense" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.header">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">header</tt><a class="headerlink" href="#easytable.presets.header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="presets-using-only-ascii-characters">
+<h2>Presets using only ASCII characters<a class="headerlink" href="#presets-using-only-ascii-characters" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="easytable.presets.asciielegant">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciielegant</tt><a class="headerlink" href="#easytable.presets.asciielegant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.asciimatrix">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciimatrix</tt><a class="headerlink" href="#easytable.presets.asciimatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.asciibox">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciibox</tt><a class="headerlink" href="#easytable.presets.asciibox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.asciicross">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciicross</tt><a class="headerlink" href="#easytable.presets.asciicross" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.asciicross2">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciicross2</tt><a class="headerlink" href="#easytable.presets.asciicross2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.asciidense">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciidense</tt><a class="headerlink" href="#easytable.presets.asciidense" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="easytable.presets.asciiheader">
+<tt class="descclassname">easytable.presets.</tt><tt class="descname">asciiheader</tt><a class="headerlink" href="#easytable.presets.asciiheader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="indices-and-tables">
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">easytable.presets</a><ul>
+<li><a class="reference internal" href="#presets-using-unicode-box-drawing-characters">Presets using unicode box-drawing characters</a></li>
+<li><a class="reference internal" href="#presets-using-only-ascii-characters">Presets using only ASCII characters</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/presets.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">easytable v0.1-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Daniel Jung.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

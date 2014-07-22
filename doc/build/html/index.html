@@ -1,0 +1,689 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>easytable &mdash; easytable v0.1-beta documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'v0.1-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="easytable v0.1-beta documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">easytable v0.1-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="easytable">
+<h1>easytable<a class="headerlink" href="#easytable" title="Permalink to this headline">¶</a></h1>
+<p>Submodules:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-easytable"></span><p>Create table representations from various data structures.</p>
+<p>Various data structures are considered: Lists containing lists, dictionaries
+containing lists, lists containing dictionaries etc. The idea of this package
+is to find the natural table-like representation for each of the considered
+data structures.</p>
+<p>The function <a class="reference internal" href="#easytable.autotable" title="easytable.autotable"><tt class="xref py py-func docutils literal"><span class="pre">autotable()</span></tt></a> is provided that can infer an appropiate table
+form the given data structure. <a class="reference internal" href="#easytable.autotable" title="easytable.autotable"><tt class="xref py py-func docutils literal"><span class="pre">autotable()</span></tt></a> is the preferred function to
+generate the table representation of most kind of tables.</p>
+<p><a class="reference internal" href="#easytable.autotable" title="easytable.autotable"><tt class="xref py py-func docutils literal"><span class="pre">autotable()</span></tt></a> is choosing one of the following specialized functions which
+is appropiate for the kind of data structure that has been passed to it.  The
+goal is to support of as many data structures as possible. The special
+functions can also used directly, to force a certain representation:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><a class="reference internal" href="#easytable.docl" title="easytable.docl"><tt class="xref py py-func docutils literal"><span class="pre">docl()</span></tt></a>:</dt>
+<dd>dictionary of lists, where each list represents a named <strong>column</strong></dd>
+<dt><a class="reference internal" href="#easytable.dorl" title="easytable.dorl"><tt class="xref py py-func docutils literal"><span class="pre">dorl()</span></tt></a>:</dt>
+<dd>dictionary of lists, where each list represents a named <strong>row</strong></dd>
+<dt><a class="reference internal" href="#easytable.locl" title="easytable.locl"><tt class="xref py py-func docutils literal"><span class="pre">locl()</span></tt></a>:</dt>
+<dd>list of lists, where each list represents a <strong>column</strong></dd>
+<dt><a class="reference internal" href="#easytable.lorl" title="easytable.lorl"><tt class="xref py py-func docutils literal"><span class="pre">lorl()</span></tt></a>:</dt>
+<dd>list of lists, where each list represents a <strong>row</strong></dd>
+<dt><a class="reference internal" href="#easytable.locd" title="easytable.locd"><tt class="xref py py-func docutils literal"><span class="pre">locd()</span></tt></a>:</dt>
+<dd>list of dictionaries, where each dictionary represents a <strong>column</strong></dd>
+<dt><a class="reference internal" href="#easytable.lord" title="easytable.lord"><tt class="xref py py-func docutils literal"><span class="pre">lord()</span></tt></a>:</dt>
+<dd>list of dictionaries, where each dictionary represents a <strong>row</strong></dd>
+<dt><a class="reference internal" href="#easytable.docd" title="easytable.docd"><tt class="xref py py-func docutils literal"><span class="pre">docd()</span></tt></a>:</dt>
+<dd>dictionary of dictionaries, where each dictionary represents a named
+<strong>column</strong>, and each key in the latter defines the name of the <strong>row</strong></dd>
+<dt><a class="reference internal" href="#easytable.dord" title="easytable.dord"><tt class="xref py py-func docutils literal"><span class="pre">dord()</span></tt></a>:</dt>
+<dd>dictionary of dictionaries, where each dictionary represents a named
+<strong>row</strong>, and each key in the latter defines the name of the <strong>column</strong></dd>
+</dl>
+</div></blockquote>
+<p>For absolute fine control, the <a class="reference internal" href="#easytable.Table" title="easytable.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a> class can be used directly to
+construct the table by hand.  The method <a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a> offers a lot of
+options to format the table. For a complete list, refer to the documentation of
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>. The respective keyword arguments can also be passed through
+the shortcut functions <a class="reference internal" href="#easytable.autotable" title="easytable.autotable"><tt class="xref py py-func docutils literal"><span class="pre">autotable()</span></tt></a>, <a class="reference internal" href="#easytable.docl" title="easytable.docl"><tt class="xref py py-func docutils literal"><span class="pre">docl()</span></tt></a> etc. A few formatting
+presets can be found in the submodule <a class="reference internal" href="presets.html#module-easytable.presets" title="easytable.presets"><tt class="xref py py-mod docutils literal"><span class="pre">presets</span></tt></a>.</p>
+<p>At the moment, there are no ambitions to implement any sorting or filtering
+options.  Data structures have to be passed in an already ordered way. <strong>Tip:</strong>
+In the case of dictionaries, the class <a class="reference external" href="http://docs.python.org/library/collections.html#collections.OrderedDict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">collections.OrderedDict</span></tt></a> can be
+used to force a certain row or column order in the table output.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="easytable.autotable">
+<tt class="descclassname">easytable.</tt><tt class="descname">autotable</tt><big>(</big><em>data_structure</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#autotable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.autotable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate table representation of the given data structure. Choose one of
+the specialized functions <em>docl</em>, <em>dorl</em>, etc. based on the given data
+structure. Keyword arguments are passed to <a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.docl">
+<tt class="descclassname">easytable.</tt><tt class="descname">docl</tt><big>(</big><em>dict_of_lists</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#docl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.docl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given dictionary of lists, where each
+list represents a named <strong>column</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.dorl">
+<tt class="descclassname">easytable.</tt><tt class="descname">dorl</tt><big>(</big><em>dict_of_lists</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#dorl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.dorl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given dictionary of lists, where each
+list represents a named <strong>row</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.locl">
+<tt class="descclassname">easytable.</tt><tt class="descname">locl</tt><big>(</big><em>list_of_lists</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#locl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.locl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given list of lists, where each list
+represents a <strong>column</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.lorl">
+<tt class="descclassname">easytable.</tt><tt class="descname">lorl</tt><big>(</big><em>list_of_lists</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#lorl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.lorl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given list of lists, where each list
+represents a <strong>row</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.locd">
+<tt class="descclassname">easytable.</tt><tt class="descname">locd</tt><big>(</big><em>list_of_dicts</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#locd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.locd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given list of dictionaries, where
+each dictionary represents a <strong>column</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.lord">
+<tt class="descclassname">easytable.</tt><tt class="descname">lord</tt><big>(</big><em>list_of_dicts</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#lord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.lord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given list of dictionaries, where
+each dictionary represents a <strong>row</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.docd">
+<tt class="descclassname">easytable.</tt><tt class="descname">docd</tt><big>(</big><em>dict_of_dicts</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#docd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.docd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given dictionary of dictionaries,
+where each dictionary represents a <strong>column</strong>. Keyword arguments are passed
+to <a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.dord">
+<tt class="descclassname">easytable.</tt><tt class="descname">dord</tt><big>(</big><em>dict_of_dicts</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#dord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.dord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table representation of the given dictionary of dictionaries,
+where each dictionary represents a <strong>row</strong>. Keyword arguments are passed to
+<a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<div class="section" id="auxiliary-functions">
+<h3>Auxiliary functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="easytable.isiter">
+<tt class="descclassname">easytable.</tt><tt class="descname">isiter</tt><big>(</big><em>obj</em><big>)</big><a class="reference internal" href="_modules/easytable.html#isiter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.isiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an object is iterable. Return True for lists, tuples,
+dictionaries and numpy arrays (all objects that possess an __iter__
+method).  Return False for scalars (float, int, etc.), strings, bool and
+None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.alliter">
+<tt class="descclassname">easytable.</tt><tt class="descname">alliter</tt><big>(</big><em>seq</em><big>)</big><a class="reference internal" href="_modules/easytable.html#alliter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.alliter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="easytable.isdict">
+<tt class="descclassname">easytable.</tt><tt class="descname">isdict</tt><big>(</big><em>obj</em><big>)</big><a class="reference internal" href="_modules/easytable.html#isdict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.isdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given object <em>obj</em> is a dictionary.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="easytable.alldict">
+<tt class="descclassname">easytable.</tt><tt class="descname">alldict</tt><big>(</big><em>seq</em><big>)</big><a class="reference internal" href="_modules/easytable.html#alldict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.alldict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="easytable.all_of_type">
+<tt class="descclassname">easytable.</tt><tt class="descname">all_of_type</tt><big>(</big><em>seq</em>, <em>dtype</em><big>)</big><a class="reference internal" href="_modules/easytable.html#all_of_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.all_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if all items of the given sequence <em>seq</em> are of the type
+<em>dtype</em>. <em>dtype</em> can also be a list of possible types.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="easytable.Table">
+<em class="property">class </em><tt class="descclassname">easytable.</tt><tt class="descname">Table</tt><big>(</big><em>cells=None</em>, <em>rowtitles=None</em>, <em>coltitles=None</em>, <em>colalign=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="easytable.Table.append_column">
+<tt class="descname">append_column</tt><big>(</big><em>data</em>, <em>title=None</em>, <em>align=None</em>, <em>startrow=0</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.append_column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.append_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.append_row">
+<tt class="descname">append_row</tt><big>(</big><em>data</em>, <em>title=None</em>, <em>startcol=0</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.append_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.append_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.bottom">
+<tt class="descname">bottom</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.bottom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Table.cells">
+<tt class="descname">cells</tt><a class="reference internal" href="_modules/easytable.html#Table.cells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.cells" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Table.colalign">
+<tt class="descname">colalign</tt><a class="reference internal" href="_modules/easytable.html#Table.colalign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colalign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.colinds">
+<tt class="descname">colinds</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.colinds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colinds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.colstrings">
+<tt class="descname">colstrings</tt><big>(</big><em>index</em>, <em>withtitle=False</em>, <em>colalign=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.colstrings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colstrings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Table.coltitles">
+<tt class="descname">coltitles</tt><a class="reference internal" href="_modules/easytable.html#Table.coltitles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.coltitles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.coltitlestrings">
+<tt class="descname">coltitlestrings</tt><big>(</big><em>colalign=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.coltitlestrings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.coltitlestrings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.column">
+<tt class="descname">column</tt><big>(</big><em>index</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.colwidth">
+<tt class="descname">colwidth</tt><big>(</big><em>index</em>, <em>withtitle=False</em>, <em>colalign=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.colwidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.colwidth_after_point">
+<tt class="descname">colwidth_after_point</tt><big>(</big><em>index</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.colwidth_after_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colwidth_after_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.colwidth_before_point">
+<tt class="descname">colwidth_before_point</tt><big>(</big><em>index</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.colwidth_before_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colwidth_before_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.colwidths">
+<tt class="descname">colwidths</tt><big>(</big><em>withtitle=False</em>, <em>colalign=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.colwidths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.colwidths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.dimensions">
+<tt class="descname">dimensions</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get table dimensions (the space needed to print the table) in the
+form (number of terminal rows, number of terminal columns). All keyword
+arguments are passed to <a class="reference internal" href="#easytable.Table.make" title="easytable.Table.make"><tt class="xref py py-meth docutils literal"><span class="pre">Table.make()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Table.hpiece">
+<tt class="descname">hpiece</tt><em class="property"> = u'\u254e'</em><a class="headerlink" href="#easytable.Table.hpiece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.insert_cell">
+<tt class="descname">insert_cell</tt><big>(</big><em>(row</em>, <em>column)</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.insert_cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.insert_cell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.insert_column">
+<tt class="descname">insert_column</tt><big>(</big><em>index</em>, <em>data</em>, <em>title=None</em>, <em>align=None</em>, <em>startrow=0</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.insert_column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.insert_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.insert_row">
+<tt class="descname">insert_row</tt><big>(</big><em>index</em>, <em>data</em>, <em>title=None</em>, <em>startcol=0</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.insert_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.insert_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.left">
+<tt class="descname">left</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.left"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.make">
+<tt class="descname">make</tt><big>(</big><em>titles=False</em>, <em>hb=''</em>, <em>vb=''</em>, <em>padding=0</em>, <em>hp=0</em>, <em>vp=0</em>, <em>autoalign=True</em>, <em>rowtitles=False</em>, <em>coltitles=False</em>, <em>hc=' '</em>, <em>vc=''</em>, <em>ht=' '</em>, <em>vt=''</em>, <em>border=''</em>, <em>borderleft=''</em>, <em>borderright=''</em>, <em>bordertop=''</em>, <em>borderbottom=''</em>, <em>paddingleft=0</em>, <em>paddingright=0</em>, <em>paddingtop=0</em>, <em>paddingbottom=0</em>, <em>width=None</em>, <em>box=True</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.make"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create table representation.</p>
+<p>The following formatting options exist:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><em>rowtitles</em>:</dt>
+<dd>Show row titles. Default: False</dd>
+<dt><em>coltitles</em>:</dt>
+<dd>Show column titles. Default: False</dd>
+<dt><em>hc</em>:</dt>
+<dd>Horizontal cell delimiter. Default: &#8216; &#8216;</dd>
+<dt><em>vc</em>:</dt>
+<dd>Vertical cell delimiter. Default: &#8216;&#8217;</dd>
+<dt><em>ht</em>:</dt>
+<dd>Horizontal delimiter between row titles and data cells.
+Default: &#8216; &#8216;</dd>
+<dt><em>vt</em>:</dt>
+<dd>Vertical delimiter between column titles and data cells.
+Default: &#8216;&#8217;</dd>
+<dt><em>borderleft</em>:</dt>
+<dd>Character used as the left table border. Default: &#8216;&#8217;</dd>
+<dt><em>borderright</em>:</dt>
+<dd>Character used as the right table border. Default: &#8216;&#8217;</dd>
+<dt><em>bordertop</em>:</dt>
+<dd>Character used as the top table border. Default: &#8216;&#8217;</dd>
+<dt><em>borderbottom</em>:</dt>
+<dd>Character used as the bottom table border. Default: &#8216;&#8217;</dd>
+<dt><em>paddingleft</em>:</dt>
+<dd>Left cell padding (number of space characters). Default: 0</dd>
+<dt><em>paddingright</em>:</dt>
+<dd>Right cell padding (number of space characters). Default: 0</dd>
+<dt><em>paddingtop</em>:</dt>
+<dd>Top cell padding (number of space characters). Default: 0</dd>
+<dt><em>paddingbottom</em>:</dt>
+<dd>Bottom cell padding (number of space characters). Default: 0</dd>
+<dt><em>autoalign</em>:</dt>
+<dd>If <em>True</em>, infer alignment of columns from the column data.
+only for those columns for which no alignment has been set.
+Default: <em>True</em></dd>
+<dt><em>width</em>:</dt>
+<dd>If not <em>None</em>, set the width of the table. The rest of the
+characters will be cut from each line. Should be set to the
+terminal width for wide tables. Default: <em>None</em></dd>
+<dt><em>box</em>:</dt>
+<dd>If <em>True</em>, interpret certain characters in the options <em>hc</em>,
+<em>vc</em>, <em>ht</em>, <em>vt</em>, <em>borderleft</em>, <em>borderright</em>, <em>bordertop</em>,
+<em>borderbottom</em>, <em>hb</em> and <em>vb</em> as unicode box drawing characters
+(0x2500..0x2580). May not be available on all systems. See the
+section &#8220;special delimiters&#8221; for a list of characters that are
+interpreted. Default: <em>True</em></dd>
+</dl>
+</div></blockquote>
+<p>The following shortcuts exist:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><em>titles</em>:</dt>
+<dd>Show row and column titles. Overrides <em>rowtitles</em> and
+<em>coltitles</em>. Default: False</dd>
+<dt><em>hb</em>:</dt>
+<dd>Set horizontal borders. Overrides <em>bordertop</em> and
+<em>borderbottom</em>. Default: &#8216;&#8217;</dd>
+<dt><em>vb</em>:</dt>
+<dd>Set vertical borders. Overrides <em>borderleft</em> and <em>borderright</em>.
+Default: &#8216;&#8217;</dd>
+<dt><em>padding</em>:</dt>
+<dd>Set cell padding (number of space characters). Overrides
+<em>paddingtop</em>, <em>paddingbottom</em>, <em>paddingleft</em> and
+<em>paddingright</em>. Default: 0</dd>
+<dt><em>hp</em>:</dt>
+<dd>Set horizontal cell padding (number of space characters).
+Overrides <em>paddingleft</em> and <em>paddingright</em>. Default: 0</dd>
+<dt><em>vp</em>:</dt>
+<dd>Set vertical cell padding (number of space characters).
+Overrides <em>paddingtop</em> and <em>paddingbottom</em>. Default: 0</dd>
+<dt><em>border</em>:</dt>
+<dd>Set borders. Overrides <em>borderleft</em>, <em>borderright</em>, <em>bordertop</em>
+and <em>borderbottom</em>. Default: &#8216;&#8217;</dd>
+</dl>
+</div></blockquote>
+<p>Special delimiters:</p>
+<p>As long as <em>box</em> is <em>True</em> (default), certain characters in the options
+<em>hc</em>, <em>vc</em>, <em>ht</em>, <em>vt</em>, <em>borderleft</em>, <em>borderright</em>, <em>bordertop</em>,
+<em>borderbottom</em>, <em>hb</em> and <em>vb</em> are interpreted as unicode box drawing
+characters (0x2500..0x2580). May not be available on all systems.</p>
+<p>Further information can be found at</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Box-drawing_character">http://en.wikipedia.org/wiki/Box-drawing_character</a></li>
+<li><a class="reference external" href="http://unicode.org/charts/PDF/U2500.pdf">http://unicode.org/charts/PDF/U2500.pdf</a></li>
+</ul>
+</div></blockquote>
+<p>The following characters are interpreted:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8220;l&#8221;:</dt>
+<dd>light single line</dd>
+<dt>&#8220;h&#8221;:</dt>
+<dd>heavy single line</dd>
+<dt>&#8220;d&#8221;:</dt>
+<dd>double line</dd>
+<dt>&#8220;2&#8221;:</dt>
+<dd>light double dash</dd>
+<dt>&#8220;u&#8221;:</dt>
+<dd>heavy double dash</dd>
+<dt>&#8220;3&#8221;:</dt>
+<dd>light triple dash</dd>
+<dt>&#8220;t&#8221;:</dt>
+<dd>heavy triple dash</dd>
+<dt>&#8220;4&#8221;:</dt>
+<dd>light quadruple dash</dd>
+<dt>&#8220;q&#8221;:</dt>
+<dd>heavy quadruple dash</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.ncols">
+<tt class="descname">ncols</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.ncols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.ncols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.nrows">
+<tt class="descname">nrows</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.nrows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.nrows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.right">
+<tt class="descname">right</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.right"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.right" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.row">
+<tt class="descname">row</tt><big>(</big><em>index</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.rowinds">
+<tt class="descname">rowinds</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.rowinds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.rowinds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.rowinds_and_colinds">
+<tt class="descname">rowinds_and_colinds</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.rowinds_and_colinds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.rowinds_and_colinds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Table.rowtitles">
+<tt class="descname">rowtitles</tt><a class="reference internal" href="_modules/easytable.html#Table.rowtitles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.rowtitles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.rowtitlescolstrings">
+<tt class="descname">rowtitlescolstrings</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.rowtitlescolstrings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.rowtitlescolstrings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.rowtitlescolwidth">
+<tt class="descname">rowtitlescolwidth</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.rowtitlescolwidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.rowtitlescolwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.size">
+<tt class="descname">size</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return size of the table in the form (number of rows, number of
+columns), excluding titles.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="easytable.Table.top">
+<tt class="descname">top</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Table.top"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Table.top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Table.vpiece">
+<tt class="descname">vpiece</tt><em class="property"> = u'\u2550'</em><a class="headerlink" href="#easytable.Table.vpiece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="easytable.Cell">
+<em class="property">class </em><tt class="descclassname">easytable.</tt><tt class="descname">Cell</tt><big>(</big><em>table</em>, <em>(row</em>, <em>column)</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="easytable.Cell.align">
+<tt class="descname">align</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.align"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.align" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.colind">
+<tt class="descname">colind</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.colind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.colind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.column">
+<tt class="descname">column</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Cell.data">
+<tt class="descname">data</tt><a class="reference internal" href="_modules/easytable.html#Cell.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.inds">
+<tt class="descname">inds</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.inds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.inds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Cell.instance_count">
+<tt class="descname">instance_count</tt><a class="reference internal" href="_modules/easytable.html#Cell.instance_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.instance_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Cell.instance_id">
+<tt class="descname">instance_id</tt><a class="reference internal" href="_modules/easytable.html#Cell.instance_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.instance_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.row">
+<tt class="descname">row</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.rowind">
+<tt class="descname">rowind</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.rowind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.rowind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.splitpoint">
+<tt class="descname">splitpoint</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.splitpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.splitpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="easytable.Cell.table">
+<tt class="descname">table</tt><a class="reference internal" href="_modules/easytable.html#Cell.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.width">
+<tt class="descname">width</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.width_after_point">
+<tt class="descname">width_after_point</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.width_after_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.width_after_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.width_before_and_after_point">
+<tt class="descname">width_before_and_after_point</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.width_before_and_after_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.width_before_and_after_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="easytable.Cell.width_before_point">
+<tt class="descname">width_before_point</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/easytable.html#Cell.width_before_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.Cell.width_before_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="easytable.CellDict">
+<em class="property">class </em><tt class="descclassname">easytable.</tt><tt class="descname">CellDict</tt><big>(</big><em>mapping_or_iterable=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#CellDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.CellDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mapping <tt class="docutils literal"><span class="pre">(row</span> <span class="pre">index,</span> <span class="pre">column</span> <span class="pre">index)</span> <span class="pre">--&gt;</span> <span class="pre">cell</span> <span class="pre">object</span></tt>.</p>
+<dl class="method">
+<dt id="easytable.CellDict.index">
+<tt class="descname">index</tt><big>(</big><em>cell</em><big>)</big><a class="reference internal" href="_modules/easytable.html#CellDict.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.CellDict.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return indices (row, column) of the given cell object. Raise
+ValueError if the cell is not present.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="easytable.TitleDict">
+<em class="property">class </em><tt class="descclassname">easytable.</tt><tt class="descname">TitleDict</tt><big>(</big><em>mapping_or_iterable=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#TitleDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.TitleDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mapping <tt class="docutils literal"><span class="pre">integer</span> <span class="pre">--&gt;</span> <span class="pre">title</span></tt>. Keys must be integer.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="easytable.AlignDict">
+<em class="property">class </em><tt class="descclassname">easytable.</tt><tt class="descname">AlignDict</tt><big>(</big><em>mapping_or_iterable=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/easytable.html#AlignDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.AlignDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mapping <tt class="docutils literal"><span class="pre">integer</span> <span class="pre">--&gt;</span> <span class="pre">string</span></tt>. Keys must be integer, values must be
+one of the strings &#8220;left&#8221;, &#8220;right&#8221;, &#8220;center&#8221;, or &#8220;point&#8221;.</p>
+</dd></dl>
+
+<div class="section" id="auxiliary-classes">
+<h3>Auxiliary classes<a class="headerlink" href="#auxiliary-classes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="easytable.items_of">
+<em class="property">class </em><tt class="descclassname">easytable.</tt><tt class="descname">items_of</tt><big>(</big><em>itemname</em>, <em>default=None</em>, <em>dtype=None</em><big>)</big><a class="reference internal" href="_modules/easytable.html#items_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#easytable.items_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instances of this class are callables which get a certain item of each
+element of a given iterable, and returns all items in form of a new
+iterable. If item does not exist and a default value is given, return that
+value.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">easytable</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#auxiliary-functions">Auxiliary functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#auxiliary-classes">Auxiliary classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">easytable v0.1-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Daniel Jung.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

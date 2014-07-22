@@ -26,8 +26,8 @@
 The presets are dictionaries which contain keyword arguments. To apply a
 preset, the dictionary of the user's choice has to be passed to
 :py:meth:`easytable.Table.make` or one of the shortcut functions
-:func:`easytable.autotable` using a double-star notation (**),
-:func:`easytable.docl` etc. Example:
+:func:`easytable.autotable`, :func:`easytable.docl` etc. using a double-star
+notation (**). Example:
 
     >>> data = dict(a=[1, 2, 3], b=[1, 2], c=[1])
     >>> print easytable.docl(d, coltitles=1, **easytable.presets.asciielegant)

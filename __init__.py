@@ -26,46 +26,55 @@
 Various data structures are considered: Lists containing lists, dictionaries
 containing lists, lists containing dictionaries etc. The idea of this package
 is to find the natural table-like representation for each of the considered
-data structures.  The function :func:`autotable` is provided that can infer an
-appropiate table form the given data structure.
+data structures.
 
-It has been attempted to find the natural tabular representation of many
-possible data structures. For each kind of data structure, specialized
-functions exist:
+The function :func:`autotable` is provided that can infer an appropiate table
+form the given data structure. :func:`autotable` is the preferred function to
+generate the table representation of most kind of tables.
+
+:func:`autotable` is choosing one of the following specialized functions which
+is appropiate for the kind of data structure that has been passed to it.  The
+goal is to support of as many data structures as possible. The special
+functions can also used directly, to force a certain representation:
 
     :func:`docl`:
-        dictionary of lists, where each list represents a named column
+        dictionary of lists, where each list represents a named **column**
 
     :func:`dorl`:
-        dictionary of lists, where each list represents a named row
+        dictionary of lists, where each list represents a named **row**
 
     :func:`locl`:
-        list of lists, where each list represents a column
+        list of lists, where each list represents a **column**
 
     :func:`lorl`:
-        list of lists, where each list represents a row
+        list of lists, where each list represents a **row**
 
     :func:`locd`:
-        list of dictionaries, where each dictionary represents a column
+        list of dictionaries, where each dictionary represents a **column**
 
     :func:`lord`:
-        list of dictionaries, where each dictionary represents a row
+        list of dictionaries, where each dictionary represents a **row**
 
     :func:`docd`:
         dictionary of dictionaries, where each dictionary represents a named
-        column
+        **column**, and each key in the latter defines the name of the **row**
 
     :func:`dord`:
         dictionary of dictionaries, where each dictionary represents a named
-        row
-
-There are no ambitions to implement any sorting or filtering options.  Data
-structures have to be passed already in an ordered way. Tip: In the case of
-dictionaries, :class:`collections.OrderedDict` can be used to force a certain
-row or column order.
+        **row**, and each key in the latter defines the name of the **column**
 
 For absolute fine control, the :class:`Table` class can be used directly to
-construct the table by hand."""
+construct the table by hand.  The method :meth:`Table.make` offers a lot of
+options to format the table. For a complete list, refer to the documentation of
+:meth:`Table.make`. The respective keyword arguments can also be passed through
+the shortcut functions :func:`autotable`, :func:`docl` etc. A few formatting
+presets can be found in the submodule :mod:`~easytable.presets`.
+
+At the moment, there are no ambitions to implement any sorting or filtering
+options.  Data structures have to be passed in an already ordered way. **Tip:**
+In the case of dictionaries, the class :class:`collections.OrderedDict` can be
+used to force a certain row or column order in the table output."""
+#
 # 2013-08-12 - 2013-08-13
 
 import presets
@@ -336,7 +345,7 @@ def alliter(seq):
 
 
 def isdict(obj):
-    """Check if the given object *obj* is a dictionar."""
+    """Check if the given object *obj* is a dictionary."""
     return hasattr(obj, 'iteritems')
 
 
@@ -917,9 +926,10 @@ class Table(object):
         characters (0x2500..0x2580). May not be available on all systems.
 
         Further information can be found at
-        http://en.wikipedia.org/wiki/Box-drawing_character
-        http://unicode.org/charts/PDF/U2500.pdfhttp://unicode.org/charts/PDF
-        /U2500.pdfhttp://unicode.org/charts/PDF/U2500.pdf
+
+            - http://en.wikipedia.org/wiki/Box-drawing_character
+
+            - http://unicode.org/charts/PDF/U2500.pdf
 
         The following characters are interpreted:
 
