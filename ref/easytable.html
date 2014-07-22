@@ -1,0 +1,776 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package easytable</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>easytable</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/djung/lib/easytable/__init__.py">/home/djung/lib/easytable/__init__.py</a></font></td></tr></table>
+    <p><tt>Create&nbsp;table&nbsp;representations&nbsp;from&nbsp;various&nbsp;data&nbsp;structures.<br>
+&nbsp;<br>
+Various&nbsp;data&nbsp;structures&nbsp;are&nbsp;considered:&nbsp;Lists&nbsp;containing&nbsp;lists,&nbsp;dictionaries<br>
+containing&nbsp;lists,&nbsp;lists&nbsp;containing&nbsp;dictionaries&nbsp;etc.&nbsp;The&nbsp;idea&nbsp;of&nbsp;this&nbsp;package<br>
+is&nbsp;to&nbsp;find&nbsp;the&nbsp;natural&nbsp;table-like&nbsp;representation&nbsp;for&nbsp;each&nbsp;of&nbsp;the&nbsp;considered<br>
+data&nbsp;structures.&nbsp;&nbsp;The&nbsp;function&nbsp;:func:`autotable`&nbsp;is&nbsp;provided&nbsp;that&nbsp;can&nbsp;infer&nbsp;an<br>
+appropiate&nbsp;table&nbsp;form&nbsp;the&nbsp;given&nbsp;data&nbsp;structure.<br>
+&nbsp;<br>
+It&nbsp;has&nbsp;been&nbsp;attempted&nbsp;to&nbsp;find&nbsp;the&nbsp;natural&nbsp;tabular&nbsp;representation&nbsp;of&nbsp;many<br>
+possible&nbsp;data&nbsp;structures.&nbsp;For&nbsp;each&nbsp;kind&nbsp;of&nbsp;data&nbsp;structure,&nbsp;specialized<br>
+functions&nbsp;exist:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`docl`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dictionary&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each&nbsp;list&nbsp;represents&nbsp;a&nbsp;named&nbsp;column<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`dorl`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dictionary&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each&nbsp;list&nbsp;represents&nbsp;a&nbsp;named&nbsp;row<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`locl`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each&nbsp;list&nbsp;represents&nbsp;a&nbsp;column<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`lorl`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each&nbsp;list&nbsp;represents&nbsp;a&nbsp;row<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`locd`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;of&nbsp;dictionaries,&nbsp;where&nbsp;each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;column<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`lord`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;of&nbsp;dictionaries,&nbsp;where&nbsp;each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;row<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`docd`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dictionary&nbsp;of&nbsp;dictionaries,&nbsp;where&nbsp;each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;named<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;column<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:func:`dord`:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dictionary&nbsp;of&nbsp;dictionaries,&nbsp;where&nbsp;each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;named<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;row<br>
+&nbsp;<br>
+There&nbsp;are&nbsp;no&nbsp;ambitions&nbsp;to&nbsp;implement&nbsp;any&nbsp;sorting&nbsp;or&nbsp;filtering&nbsp;options.&nbsp;&nbsp;Data<br>
+structures&nbsp;have&nbsp;to&nbsp;be&nbsp;passed&nbsp;already&nbsp;in&nbsp;an&nbsp;ordered&nbsp;way.&nbsp;Tip:&nbsp;In&nbsp;the&nbsp;case&nbsp;of<br>
+dictionaries,&nbsp;:class:`collections.OrderedDict`&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;force&nbsp;a&nbsp;certain<br>
+row&nbsp;or&nbsp;column&nbsp;order.<br>
+&nbsp;<br>
+For&nbsp;absolute&nbsp;fine&nbsp;control,&nbsp;the&nbsp;:class:`<a href="#Table">Table</a>`&nbsp;class&nbsp;can&nbsp;be&nbsp;used&nbsp;directly&nbsp;to<br>
+construct&nbsp;the&nbsp;table&nbsp;by&nbsp;hand.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="easytable.presets.html">presets</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#dict">__builtin__.dict</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="easytable.html#AlignDict">AlignDict</a>
+</font></dt><dt><font face="helvetica, arial"><a href="easytable.html#CellDict">CellDict</a>
+</font></dt><dt><font face="helvetica, arial"><a href="easytable.html#TitleDict">TitleDict</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="easytable.html#Cell">Cell</a>
+</font></dt><dt><font face="helvetica, arial"><a href="easytable.html#Table">Table</a>
+</font></dt><dt><font face="helvetica, arial"><a href="easytable.html#items_of">items_of</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="AlignDict">class <strong>AlignDict</strong></a>(<a href="__builtin__.html#dict">__builtin__.dict</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;mapping&nbsp;``integer&nbsp;--&gt;&nbsp;string``.&nbsp;Keys&nbsp;must&nbsp;be&nbsp;integer,&nbsp;values&nbsp;must&nbsp;be<br>
+one&nbsp;of&nbsp;the&nbsp;strings&nbsp;"left",&nbsp;"right",&nbsp;"center",&nbsp;or&nbsp;"point".<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="easytable.html#AlignDict">AlignDict</a></dd>
+<dd><a href="__builtin__.html#dict">__builtin__.dict</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="AlignDict-__init__"><strong>__init__</strong></a>(self, mapping_or_iterable<font color="#909090">=None</font>, **kwargs)</dt></dl>
+
+<dl><dt><a name="AlignDict-__setitem__"><strong>__setitem__</strong></a>(self, key, value)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><a name="AlignDict-__cmp__"><strong>__cmp__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__cmp__">__cmp__</a>(y)&nbsp;&lt;==&gt;&nbsp;cmp(x,y)</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__contains__"><strong>__contains__</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-__contains__">__contains__</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__eq__"><strong>__eq__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__eq__">__eq__</a>(y)&nbsp;&lt;==&gt;&nbsp;x==y</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__ge__"><strong>__ge__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__ge__">__ge__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;=y</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__gt__"><strong>__gt__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__gt__">__gt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;y</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__iter__"><strong>__iter__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__iter__">__iter__</a>()&nbsp;&lt;==&gt;&nbsp;iter(x)</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__le__"><strong>__le__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__le__">__le__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;=y</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__len__"><strong>__len__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__len__">__len__</a>()&nbsp;&lt;==&gt;&nbsp;len(x)</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__lt__"><strong>__lt__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__lt__">__lt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;y</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__ne__"><strong>__ne__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__ne__">__ne__</a>(y)&nbsp;&lt;==&gt;&nbsp;x!=y</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#AlignDict-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-__sizeof__"><strong>__sizeof__</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-__sizeof__">__sizeof__</a>()&nbsp;-&gt;&nbsp;size&nbsp;of&nbsp;D&nbsp;in&nbsp;memory,&nbsp;in&nbsp;bytes</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-clear"><strong>clear</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-clear">clear</a>()&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;D.</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-copy"><strong>copy</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-copy">copy</a>()&nbsp;-&gt;&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-fromkeys"><strong>fromkeys</strong></a>(...)</dt><dd><tt><a href="__builtin__.html#dict">dict</a>.<a href="#AlignDict-fromkeys">fromkeys</a>(S[,v])&nbsp;-&gt;&nbsp;New&nbsp;<a href="__builtin__.html#dict">dict</a>&nbsp;with&nbsp;keys&nbsp;from&nbsp;S&nbsp;and&nbsp;values&nbsp;equal&nbsp;to&nbsp;v.<br>
+v&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-get"><strong>get</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-get">get</a>(k[,d])&nbsp;-&gt;&nbsp;D[k]&nbsp;if&nbsp;k&nbsp;in&nbsp;D,&nbsp;else&nbsp;d.&nbsp;&nbsp;d&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-has_key"><strong>has_key</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-has_key">has_key</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-items"><strong>items</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-items">items</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;(key,&nbsp;value)&nbsp;pairs,&nbsp;as&nbsp;2-tuples</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-iteritems"><strong>iteritems</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-iteritems">iteritems</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;(key,&nbsp;value)&nbsp;items&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-iterkeys"><strong>iterkeys</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-iterkeys">iterkeys</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;keys&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-itervalues"><strong>itervalues</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-itervalues">itervalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;values&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-keys"><strong>keys</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-keys">keys</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-pop"><strong>pop</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-pop">pop</a>(k[,d])&nbsp;-&gt;&nbsp;v,&nbsp;remove&nbsp;specified&nbsp;key&nbsp;and&nbsp;return&nbsp;the&nbsp;corresponding&nbsp;value.<br>
+If&nbsp;key&nbsp;is&nbsp;not&nbsp;found,&nbsp;d&nbsp;is&nbsp;returned&nbsp;if&nbsp;given,&nbsp;otherwise&nbsp;KeyError&nbsp;is&nbsp;raised</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-popitem"><strong>popitem</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-popitem">popitem</a>()&nbsp;-&gt;&nbsp;(k,&nbsp;v),&nbsp;remove&nbsp;and&nbsp;return&nbsp;some&nbsp;(key,&nbsp;value)&nbsp;pair&nbsp;as&nbsp;a<br>
+2-tuple;&nbsp;but&nbsp;raise&nbsp;KeyError&nbsp;if&nbsp;D&nbsp;is&nbsp;empty.</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-setdefault"><strong>setdefault</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-setdefault">setdefault</a>(k[,d])&nbsp;-&gt;&nbsp;D.<a href="#AlignDict-get">get</a>(k,d),&nbsp;also&nbsp;set&nbsp;D[k]=d&nbsp;if&nbsp;k&nbsp;not&nbsp;in&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-update"><strong>update</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-update">update</a>([E,&nbsp;]**F)&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Update&nbsp;D&nbsp;from&nbsp;<a href="__builtin__.html#dict">dict</a>/iterable&nbsp;E&nbsp;and&nbsp;F.<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;has&nbsp;a&nbsp;.<a href="#AlignDict-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;k&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;E[k]<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;lacks&nbsp;.<a href="#AlignDict-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(k,&nbsp;v)&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;v<br>
+In&nbsp;either&nbsp;case,&nbsp;this&nbsp;is&nbsp;followed&nbsp;by:&nbsp;for&nbsp;k&nbsp;in&nbsp;F:&nbsp;D[k]&nbsp;=&nbsp;F[k]</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-values"><strong>values</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-values">values</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-viewitems"><strong>viewitems</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-viewitems">viewitems</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;items</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-viewkeys"><strong>viewkeys</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-viewkeys">viewkeys</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="AlignDict-viewvalues"><strong>viewvalues</strong></a>(...)</dt><dd><tt>D.<a href="#AlignDict-viewvalues">viewvalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#AlignDict-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Cell">class <strong>Cell</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Cell-__init__"><strong>__init__</strong></a>(self, table, (row, column), data<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Cell-__len__"><strong>__len__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-align"><strong>align</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-colind"><strong>colind</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-column"><strong>column</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-inds"><strong>inds</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-row"><strong>row</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-rowind"><strong>rowind</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-splitpoint"><strong>splitpoint</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-width"><strong>width</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-width_after_point"><strong>width_after_point</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-width_before_and_after_point"><strong>width_before_and_after_point</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Cell-width_before_point"><strong>width_before_point</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>data</strong></dt>
+</dl>
+<dl><dt><strong>instance_count</strong></dt>
+</dl>
+<dl><dt><strong>instance_id</strong></dt>
+</dl>
+<dl><dt><strong>table</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CellDict">class <strong>CellDict</strong></a>(<a href="__builtin__.html#dict">__builtin__.dict</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;mapping&nbsp;``(row&nbsp;index,&nbsp;column&nbsp;index)&nbsp;--&gt;&nbsp;cell&nbsp;<a href="__builtin__.html#object">object</a>``.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="easytable.html#CellDict">CellDict</a></dd>
+<dd><a href="__builtin__.html#dict">__builtin__.dict</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="CellDict-__delitem__"><strong>__delitem__</strong></a>(self, inds)</dt></dl>
+
+<dl><dt><a name="CellDict-__init__"><strong>__init__</strong></a>(self, mapping_or_iterable<font color="#909090">=None</font>, **kwargs)</dt></dl>
+
+<dl><dt><a name="CellDict-__setitem__"><strong>__setitem__</strong></a>(self, key, value)</dt></dl>
+
+<dl><dt><a name="CellDict-index"><strong>index</strong></a>(self, cell)</dt><dd><tt>Return&nbsp;indices&nbsp;(row,&nbsp;column)&nbsp;of&nbsp;the&nbsp;given&nbsp;cell&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;Raise<br>
+ValueError&nbsp;if&nbsp;the&nbsp;cell&nbsp;is&nbsp;not&nbsp;present.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><a name="CellDict-__cmp__"><strong>__cmp__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__cmp__">__cmp__</a>(y)&nbsp;&lt;==&gt;&nbsp;cmp(x,y)</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__contains__"><strong>__contains__</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-__contains__">__contains__</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__eq__"><strong>__eq__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__eq__">__eq__</a>(y)&nbsp;&lt;==&gt;&nbsp;x==y</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__ge__"><strong>__ge__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__ge__">__ge__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;=y</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__gt__"><strong>__gt__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__gt__">__gt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;y</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__iter__"><strong>__iter__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__iter__">__iter__</a>()&nbsp;&lt;==&gt;&nbsp;iter(x)</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__le__"><strong>__le__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__le__">__le__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;=y</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__len__"><strong>__len__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__len__">__len__</a>()&nbsp;&lt;==&gt;&nbsp;len(x)</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__lt__"><strong>__lt__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__lt__">__lt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;y</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__ne__"><strong>__ne__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__ne__">__ne__</a>(y)&nbsp;&lt;==&gt;&nbsp;x!=y</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#CellDict-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="CellDict-__sizeof__"><strong>__sizeof__</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-__sizeof__">__sizeof__</a>()&nbsp;-&gt;&nbsp;size&nbsp;of&nbsp;D&nbsp;in&nbsp;memory,&nbsp;in&nbsp;bytes</tt></dd></dl>
+
+<dl><dt><a name="CellDict-clear"><strong>clear</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-clear">clear</a>()&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;D.</tt></dd></dl>
+
+<dl><dt><a name="CellDict-copy"><strong>copy</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-copy">copy</a>()&nbsp;-&gt;&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="CellDict-fromkeys"><strong>fromkeys</strong></a>(...)</dt><dd><tt><a href="__builtin__.html#dict">dict</a>.<a href="#CellDict-fromkeys">fromkeys</a>(S[,v])&nbsp;-&gt;&nbsp;New&nbsp;<a href="__builtin__.html#dict">dict</a>&nbsp;with&nbsp;keys&nbsp;from&nbsp;S&nbsp;and&nbsp;values&nbsp;equal&nbsp;to&nbsp;v.<br>
+v&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="CellDict-get"><strong>get</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-get">get</a>(k[,d])&nbsp;-&gt;&nbsp;D[k]&nbsp;if&nbsp;k&nbsp;in&nbsp;D,&nbsp;else&nbsp;d.&nbsp;&nbsp;d&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="CellDict-has_key"><strong>has_key</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-has_key">has_key</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="CellDict-items"><strong>items</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-items">items</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;(key,&nbsp;value)&nbsp;pairs,&nbsp;as&nbsp;2-tuples</tt></dd></dl>
+
+<dl><dt><a name="CellDict-iteritems"><strong>iteritems</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-iteritems">iteritems</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;(key,&nbsp;value)&nbsp;items&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="CellDict-iterkeys"><strong>iterkeys</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-iterkeys">iterkeys</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;keys&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="CellDict-itervalues"><strong>itervalues</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-itervalues">itervalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;values&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="CellDict-keys"><strong>keys</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-keys">keys</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="CellDict-pop"><strong>pop</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-pop">pop</a>(k[,d])&nbsp;-&gt;&nbsp;v,&nbsp;remove&nbsp;specified&nbsp;key&nbsp;and&nbsp;return&nbsp;the&nbsp;corresponding&nbsp;value.<br>
+If&nbsp;key&nbsp;is&nbsp;not&nbsp;found,&nbsp;d&nbsp;is&nbsp;returned&nbsp;if&nbsp;given,&nbsp;otherwise&nbsp;KeyError&nbsp;is&nbsp;raised</tt></dd></dl>
+
+<dl><dt><a name="CellDict-popitem"><strong>popitem</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-popitem">popitem</a>()&nbsp;-&gt;&nbsp;(k,&nbsp;v),&nbsp;remove&nbsp;and&nbsp;return&nbsp;some&nbsp;(key,&nbsp;value)&nbsp;pair&nbsp;as&nbsp;a<br>
+2-tuple;&nbsp;but&nbsp;raise&nbsp;KeyError&nbsp;if&nbsp;D&nbsp;is&nbsp;empty.</tt></dd></dl>
+
+<dl><dt><a name="CellDict-setdefault"><strong>setdefault</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-setdefault">setdefault</a>(k[,d])&nbsp;-&gt;&nbsp;D.<a href="#CellDict-get">get</a>(k,d),&nbsp;also&nbsp;set&nbsp;D[k]=d&nbsp;if&nbsp;k&nbsp;not&nbsp;in&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="CellDict-update"><strong>update</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-update">update</a>([E,&nbsp;]**F)&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Update&nbsp;D&nbsp;from&nbsp;<a href="__builtin__.html#dict">dict</a>/iterable&nbsp;E&nbsp;and&nbsp;F.<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;has&nbsp;a&nbsp;.<a href="#CellDict-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;k&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;E[k]<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;lacks&nbsp;.<a href="#CellDict-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(k,&nbsp;v)&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;v<br>
+In&nbsp;either&nbsp;case,&nbsp;this&nbsp;is&nbsp;followed&nbsp;by:&nbsp;for&nbsp;k&nbsp;in&nbsp;F:&nbsp;D[k]&nbsp;=&nbsp;F[k]</tt></dd></dl>
+
+<dl><dt><a name="CellDict-values"><strong>values</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-values">values</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<dl><dt><a name="CellDict-viewitems"><strong>viewitems</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-viewitems">viewitems</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;items</tt></dd></dl>
+
+<dl><dt><a name="CellDict-viewkeys"><strong>viewkeys</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-viewkeys">viewkeys</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="CellDict-viewvalues"><strong>viewvalues</strong></a>(...)</dt><dd><tt>D.<a href="#CellDict-viewvalues">viewvalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#CellDict-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Table">class <strong>Table</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Table-__init__"><strong>__init__</strong></a>(self, cells<font color="#909090">=None</font>, rowtitles<font color="#909090">=None</font>, coltitles<font color="#909090">=None</font>, colalign<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Table-append_column"><strong>append_column</strong></a>(self, data, title<font color="#909090">=None</font>, align<font color="#909090">=None</font>, startrow<font color="#909090">=0</font>)</dt></dl>
+
+<dl><dt><a name="Table-append_row"><strong>append_row</strong></a>(self, data, title<font color="#909090">=None</font>, startcol<font color="#909090">=0</font>)</dt></dl>
+
+<dl><dt><a name="Table-bottom"><strong>bottom</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-colinds"><strong>colinds</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-colstrings"><strong>colstrings</strong></a>(self, index, withtitle<font color="#909090">=False</font>, colalign<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Table-coltitlestrings"><strong>coltitlestrings</strong></a>(self, colalign<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Table-column"><strong>column</strong></a>(self, index)</dt></dl>
+
+<dl><dt><a name="Table-colwidth"><strong>colwidth</strong></a>(self, index, withtitle<font color="#909090">=False</font>, colalign<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Table-colwidth_after_point"><strong>colwidth_after_point</strong></a>(self, index)</dt></dl>
+
+<dl><dt><a name="Table-colwidth_before_point"><strong>colwidth_before_point</strong></a>(self, index)</dt></dl>
+
+<dl><dt><a name="Table-colwidths"><strong>colwidths</strong></a>(self, withtitle<font color="#909090">=False</font>, colalign<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Table-dimensions"><strong>dimensions</strong></a>(self, **kwargs)</dt><dd><tt>Get&nbsp;table&nbsp;dimensions&nbsp;(the&nbsp;space&nbsp;needed&nbsp;to&nbsp;print&nbsp;the&nbsp;table)&nbsp;in&nbsp;the<br>
+form&nbsp;(number&nbsp;of&nbsp;terminal&nbsp;rows,&nbsp;number&nbsp;of&nbsp;terminal&nbsp;columns).&nbsp;All&nbsp;keyword<br>
+arguments&nbsp;are&nbsp;passed&nbsp;to&nbsp;:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+
+<dl><dt><a name="Table-insert_cell"><strong>insert_cell</strong></a>(self, (row, column), data<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="Table-insert_column"><strong>insert_column</strong></a>(self, index, data, title<font color="#909090">=None</font>, align<font color="#909090">=None</font>, startrow<font color="#909090">=0</font>)</dt></dl>
+
+<dl><dt><a name="Table-insert_row"><strong>insert_row</strong></a>(self, index, data, title<font color="#909090">=None</font>, startcol<font color="#909090">=0</font>)</dt></dl>
+
+<dl><dt><a name="Table-left"><strong>left</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-make"><strong>make</strong></a>(self, titles<font color="#909090">=False</font>, hb<font color="#909090">=''</font>, vb<font color="#909090">=''</font>, padding<font color="#909090">=0</font>, hp<font color="#909090">=0</font>, vp<font color="#909090">=0</font>, autoalign<font color="#909090">=True</font>, rowtitles<font color="#909090">=False</font>, coltitles<font color="#909090">=False</font>, hc<font color="#909090">=' '</font>, vc<font color="#909090">=''</font>, ht<font color="#909090">=' '</font>, vt<font color="#909090">=''</font>, border<font color="#909090">=''</font>, borderleft<font color="#909090">=''</font>, borderright<font color="#909090">=''</font>, bordertop<font color="#909090">=''</font>, borderbottom<font color="#909090">=''</font>, paddingleft<font color="#909090">=0</font>, paddingright<font color="#909090">=0</font>, paddingtop<font color="#909090">=0</font>, paddingbottom<font color="#909090">=0</font>, width<font color="#909090">=None</font>, box<font color="#909090">=True</font>)</dt><dd><tt>Create&nbsp;table&nbsp;representation.<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;following&nbsp;formatting&nbsp;options&nbsp;exist:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*rowtitles*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show&nbsp;row&nbsp;titles.&nbsp;Default:&nbsp;False<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*coltitles*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show&nbsp;column&nbsp;titles.&nbsp;Default:&nbsp;False<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*hc*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horizontal&nbsp;cell&nbsp;delimiter.&nbsp;Default:&nbsp;'&nbsp;'<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*vc*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vertical&nbsp;cell&nbsp;delimiter.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*ht*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horizontal&nbsp;delimiter&nbsp;between&nbsp;row&nbsp;titles&nbsp;and&nbsp;data&nbsp;cells.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default:&nbsp;'&nbsp;'<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*vt*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vertical&nbsp;delimiter&nbsp;between&nbsp;column&nbsp;titles&nbsp;and&nbsp;data&nbsp;cells.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*borderleft*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Character&nbsp;used&nbsp;as&nbsp;the&nbsp;left&nbsp;table&nbsp;border.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*borderright*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Character&nbsp;used&nbsp;as&nbsp;the&nbsp;right&nbsp;table&nbsp;border.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*bordertop*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Character&nbsp;used&nbsp;as&nbsp;the&nbsp;top&nbsp;table&nbsp;border.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*borderbottom*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Character&nbsp;used&nbsp;as&nbsp;the&nbsp;bottom&nbsp;table&nbsp;border.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*paddingleft*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Left&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*paddingright*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Right&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*paddingtop*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Top&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*paddingbottom*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bottom&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*autoalign*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;*True*,&nbsp;infer&nbsp;alignment&nbsp;of&nbsp;columns&nbsp;from&nbsp;the&nbsp;column&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;for&nbsp;those&nbsp;columns&nbsp;for&nbsp;which&nbsp;no&nbsp;alignment&nbsp;has&nbsp;been&nbsp;set.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default:&nbsp;*True*<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*width*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;*None*,&nbsp;set&nbsp;the&nbsp;width&nbsp;of&nbsp;the&nbsp;table.&nbsp;The&nbsp;rest&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;characters&nbsp;will&nbsp;be&nbsp;cut&nbsp;from&nbsp;each&nbsp;line.&nbsp;Should&nbsp;be&nbsp;set&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;terminal&nbsp;width&nbsp;for&nbsp;wide&nbsp;tables.&nbsp;Default:&nbsp;*None*<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*box*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;*True*,&nbsp;interpret&nbsp;certain&nbsp;characters&nbsp;in&nbsp;the&nbsp;options&nbsp;*hc*,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*vc*,&nbsp;*ht*,&nbsp;*vt*,&nbsp;*borderleft*,&nbsp;*borderright*,&nbsp;*bordertop*,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*borderbottom*,&nbsp;*hb*&nbsp;and&nbsp;*vb*&nbsp;as&nbsp;unicode&nbsp;box&nbsp;drawing&nbsp;characters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(0x2500..0x2580).&nbsp;May&nbsp;not&nbsp;be&nbsp;available&nbsp;on&nbsp;all&nbsp;systems.&nbsp;See&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section&nbsp;"special&nbsp;delimiters"&nbsp;for&nbsp;a&nbsp;list&nbsp;of&nbsp;characters&nbsp;that&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interpreted.&nbsp;Default:&nbsp;*True*<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;following&nbsp;shortcuts&nbsp;exist:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*titles*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show&nbsp;row&nbsp;and&nbsp;column&nbsp;titles.&nbsp;Overrides&nbsp;*rowtitles*&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*coltitles*.&nbsp;Default:&nbsp;False<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*hb*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;horizontal&nbsp;borders.&nbsp;Overrides&nbsp;*bordertop*&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*borderbottom*.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*vb*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;vertical&nbsp;borders.&nbsp;Overrides&nbsp;*borderleft*&nbsp;and&nbsp;*borderright*.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*padding*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).&nbsp;Overrides<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*paddingtop*,&nbsp;*paddingbottom*,&nbsp;*paddingleft*&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*paddingright*.&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*hp*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;horizontal&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Overrides&nbsp;*paddingleft*&nbsp;and&nbsp;*paddingright*.&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*vp*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;vertical&nbsp;cell&nbsp;padding&nbsp;(number&nbsp;of&nbsp;space&nbsp;characters).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Overrides&nbsp;*paddingtop*&nbsp;and&nbsp;*paddingbottom*.&nbsp;Default:&nbsp;0<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*border*:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;borders.&nbsp;Overrides&nbsp;*borderleft*,&nbsp;*borderright*,&nbsp;*bordertop*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;*borderbottom*.&nbsp;Default:&nbsp;''<br>
+&nbsp;<br>
+&nbsp;<br>
+Special&nbsp;delimiters:<br>
+&nbsp;<br>
+As&nbsp;long&nbsp;as&nbsp;*box*&nbsp;is&nbsp;*True*&nbsp;(default),&nbsp;certain&nbsp;characters&nbsp;in&nbsp;the&nbsp;options<br>
+*hc*,&nbsp;*vc*,&nbsp;*ht*,&nbsp;*vt*,&nbsp;*borderleft*,&nbsp;*borderright*,&nbsp;*bordertop*,<br>
+*borderbottom*,&nbsp;*hb*&nbsp;and&nbsp;*vb*&nbsp;are&nbsp;interpreted&nbsp;as&nbsp;unicode&nbsp;box&nbsp;drawing<br>
+characters&nbsp;(0x2500..0x2580).&nbsp;May&nbsp;not&nbsp;be&nbsp;available&nbsp;on&nbsp;all&nbsp;systems.<br>
+&nbsp;<br>
+Further&nbsp;information&nbsp;can&nbsp;be&nbsp;found&nbsp;at<br>
+<a href="http://en.wikipedia.org/wiki/Box-drawing_character">http://en.wikipedia.org/wiki/Box-drawing_character</a><br>
+<a href="http://unicode.org/charts/PDF/U2500.pdfhttp://unicode.org/charts/PDF">http://unicode.org/charts/PDF/U2500.pdfhttp://unicode.org/charts/PDF</a><br>
+/U2500.pdfhttp://unicode.org/charts/PDF/U2500.pdf<br>
+&nbsp;<br>
+The&nbsp;following&nbsp;characters&nbsp;are&nbsp;interpreted:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"l":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;light&nbsp;single&nbsp;line<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"h":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;heavy&nbsp;single&nbsp;line<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"d":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;line<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"2":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;light&nbsp;double&nbsp;dash<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"u":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;heavy&nbsp;double&nbsp;dash<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"3":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;light&nbsp;triple&nbsp;dash<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"t":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;heavy&nbsp;triple&nbsp;dash<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"4":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;light&nbsp;quadruple&nbsp;dash<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"q":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;heavy&nbsp;quadruple&nbsp;dash</tt></dd></dl>
+
+<dl><dt><a name="Table-ncols"><strong>ncols</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-nrows"><strong>nrows</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-right"><strong>right</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-row"><strong>row</strong></a>(self, index)</dt></dl>
+
+<dl><dt><a name="Table-rowinds"><strong>rowinds</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-rowinds_and_colinds"><strong>rowinds_and_colinds</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-rowtitlescolstrings"><strong>rowtitlescolstrings</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-rowtitlescolwidth"><strong>rowtitlescolwidth</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Table-size"><strong>size</strong></a>(self)</dt><dd><tt>Return&nbsp;size&nbsp;of&nbsp;the&nbsp;table&nbsp;in&nbsp;the&nbsp;form&nbsp;(number&nbsp;of&nbsp;rows,&nbsp;number&nbsp;of<br>
+columns),&nbsp;excluding&nbsp;titles.</tt></dd></dl>
+
+<dl><dt><a name="Table-top"><strong>top</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>cells</strong></dt>
+</dl>
+<dl><dt><strong>colalign</strong></dt>
+</dl>
+<dl><dt><strong>coltitles</strong></dt>
+</dl>
+<dl><dt><strong>rowtitles</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>hpiece</strong> = u'<font color="#c040c0">\u254e</font>'</dl>
+
+<dl><dt><strong>vpiece</strong> = u'<font color="#c040c0">\u2550</font>'</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TitleDict">class <strong>TitleDict</strong></a>(<a href="__builtin__.html#dict">__builtin__.dict</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;mapping&nbsp;``integer&nbsp;--&gt;&nbsp;title``.&nbsp;Keys&nbsp;must&nbsp;be&nbsp;integer.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="easytable.html#TitleDict">TitleDict</a></dd>
+<dd><a href="__builtin__.html#dict">__builtin__.dict</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="TitleDict-__init__"><strong>__init__</strong></a>(self, mapping_or_iterable<font color="#909090">=None</font>, **kwargs)</dt></dl>
+
+<dl><dt><a name="TitleDict-__setitem__"><strong>__setitem__</strong></a>(self, key, value)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><a name="TitleDict-__cmp__"><strong>__cmp__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__cmp__">__cmp__</a>(y)&nbsp;&lt;==&gt;&nbsp;cmp(x,y)</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__contains__"><strong>__contains__</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-__contains__">__contains__</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__eq__"><strong>__eq__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__eq__">__eq__</a>(y)&nbsp;&lt;==&gt;&nbsp;x==y</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__ge__"><strong>__ge__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__ge__">__ge__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;=y</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__gt__"><strong>__gt__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__gt__">__gt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;y</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__iter__"><strong>__iter__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__iter__">__iter__</a>()&nbsp;&lt;==&gt;&nbsp;iter(x)</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__le__"><strong>__le__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__le__">__le__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;=y</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__len__"><strong>__len__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__len__">__len__</a>()&nbsp;&lt;==&gt;&nbsp;len(x)</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__lt__"><strong>__lt__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__lt__">__lt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;y</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__ne__"><strong>__ne__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__ne__">__ne__</a>(y)&nbsp;&lt;==&gt;&nbsp;x!=y</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#TitleDict-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-__sizeof__"><strong>__sizeof__</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-__sizeof__">__sizeof__</a>()&nbsp;-&gt;&nbsp;size&nbsp;of&nbsp;D&nbsp;in&nbsp;memory,&nbsp;in&nbsp;bytes</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-clear"><strong>clear</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-clear">clear</a>()&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;D.</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-copy"><strong>copy</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-copy">copy</a>()&nbsp;-&gt;&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-fromkeys"><strong>fromkeys</strong></a>(...)</dt><dd><tt><a href="__builtin__.html#dict">dict</a>.<a href="#TitleDict-fromkeys">fromkeys</a>(S[,v])&nbsp;-&gt;&nbsp;New&nbsp;<a href="__builtin__.html#dict">dict</a>&nbsp;with&nbsp;keys&nbsp;from&nbsp;S&nbsp;and&nbsp;values&nbsp;equal&nbsp;to&nbsp;v.<br>
+v&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-get"><strong>get</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-get">get</a>(k[,d])&nbsp;-&gt;&nbsp;D[k]&nbsp;if&nbsp;k&nbsp;in&nbsp;D,&nbsp;else&nbsp;d.&nbsp;&nbsp;d&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-has_key"><strong>has_key</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-has_key">has_key</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-items"><strong>items</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-items">items</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;(key,&nbsp;value)&nbsp;pairs,&nbsp;as&nbsp;2-tuples</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-iteritems"><strong>iteritems</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-iteritems">iteritems</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;(key,&nbsp;value)&nbsp;items&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-iterkeys"><strong>iterkeys</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-iterkeys">iterkeys</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;keys&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-itervalues"><strong>itervalues</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-itervalues">itervalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;values&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-keys"><strong>keys</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-keys">keys</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-pop"><strong>pop</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-pop">pop</a>(k[,d])&nbsp;-&gt;&nbsp;v,&nbsp;remove&nbsp;specified&nbsp;key&nbsp;and&nbsp;return&nbsp;the&nbsp;corresponding&nbsp;value.<br>
+If&nbsp;key&nbsp;is&nbsp;not&nbsp;found,&nbsp;d&nbsp;is&nbsp;returned&nbsp;if&nbsp;given,&nbsp;otherwise&nbsp;KeyError&nbsp;is&nbsp;raised</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-popitem"><strong>popitem</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-popitem">popitem</a>()&nbsp;-&gt;&nbsp;(k,&nbsp;v),&nbsp;remove&nbsp;and&nbsp;return&nbsp;some&nbsp;(key,&nbsp;value)&nbsp;pair&nbsp;as&nbsp;a<br>
+2-tuple;&nbsp;but&nbsp;raise&nbsp;KeyError&nbsp;if&nbsp;D&nbsp;is&nbsp;empty.</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-setdefault"><strong>setdefault</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-setdefault">setdefault</a>(k[,d])&nbsp;-&gt;&nbsp;D.<a href="#TitleDict-get">get</a>(k,d),&nbsp;also&nbsp;set&nbsp;D[k]=d&nbsp;if&nbsp;k&nbsp;not&nbsp;in&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-update"><strong>update</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-update">update</a>([E,&nbsp;]**F)&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Update&nbsp;D&nbsp;from&nbsp;<a href="__builtin__.html#dict">dict</a>/iterable&nbsp;E&nbsp;and&nbsp;F.<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;has&nbsp;a&nbsp;.<a href="#TitleDict-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;k&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;E[k]<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;lacks&nbsp;.<a href="#TitleDict-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(k,&nbsp;v)&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;v<br>
+In&nbsp;either&nbsp;case,&nbsp;this&nbsp;is&nbsp;followed&nbsp;by:&nbsp;for&nbsp;k&nbsp;in&nbsp;F:&nbsp;D[k]&nbsp;=&nbsp;F[k]</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-values"><strong>values</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-values">values</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-viewitems"><strong>viewitems</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-viewitems">viewitems</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;items</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-viewkeys"><strong>viewkeys</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-viewkeys">viewkeys</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="TitleDict-viewvalues"><strong>viewvalues</strong></a>(...)</dt><dd><tt>D.<a href="#TitleDict-viewvalues">viewvalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#TitleDict-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="items_of">class <strong>items_of</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Instances&nbsp;of&nbsp;this&nbsp;class&nbsp;are&nbsp;callables&nbsp;which&nbsp;get&nbsp;a&nbsp;certain&nbsp;item&nbsp;of&nbsp;each<br>
+element&nbsp;of&nbsp;a&nbsp;given&nbsp;iterable,&nbsp;and&nbsp;returns&nbsp;all&nbsp;items&nbsp;in&nbsp;form&nbsp;of&nbsp;a&nbsp;new<br>
+iterable.&nbsp;If&nbsp;item&nbsp;does&nbsp;not&nbsp;exist&nbsp;and&nbsp;a&nbsp;default&nbsp;value&nbsp;is&nbsp;given,&nbsp;return&nbsp;that<br>
+value.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="items_of-__call__"><strong>__call__</strong></a>(self, iterable)</dt></dl>
+
+<dl><dt><a name="items_of-__init__"><strong>__init__</strong></a>(self, itemname, default<font color="#909090">=None</font>, dtype<font color="#909090">=None</font>)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-all_of_type"><strong>all_of_type</strong></a>(seq, dtype)</dt><dd><tt>Check&nbsp;if&nbsp;all&nbsp;items&nbsp;of&nbsp;the&nbsp;given&nbsp;sequence&nbsp;*seq*&nbsp;are&nbsp;of&nbsp;the&nbsp;type<br>
+*dtype*.&nbsp;*dtype*&nbsp;can&nbsp;also&nbsp;be&nbsp;a&nbsp;list&nbsp;of&nbsp;possible&nbsp;types.</tt></dd></dl>
+ <dl><dt><a name="-alldict"><strong>alldict</strong></a>(seq)</dt></dl>
+ <dl><dt><a name="-alliter"><strong>alliter</strong></a>(seq)</dt></dl>
+ <dl><dt><a name="-autotable"><strong>autotable</strong></a>(data_structure, **kwargs)</dt><dd><tt>Generate&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;data&nbsp;structure.&nbsp;Choose&nbsp;one&nbsp;of<br>
+the&nbsp;specialized&nbsp;functions&nbsp;*docl*,&nbsp;*dorl*,&nbsp;etc.&nbsp;based&nbsp;on&nbsp;the&nbsp;given&nbsp;data<br>
+structure.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to&nbsp;:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-docd"><strong>docd</strong></a>(dict_of_dicts, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;dictionary&nbsp;of&nbsp;dictionaries,<br>
+where&nbsp;each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;**column**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed<br>
+to&nbsp;:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-docl"><strong>docl</strong></a>(dict_of_lists, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;dictionary&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each<br>
+list&nbsp;represents&nbsp;a&nbsp;named&nbsp;**column**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-dord"><strong>dord</strong></a>(dict_of_dicts, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;dictionary&nbsp;of&nbsp;dictionaries,<br>
+where&nbsp;each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;**row**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-dorl"><strong>dorl</strong></a>(dict_of_lists, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;dictionary&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each<br>
+list&nbsp;represents&nbsp;a&nbsp;named&nbsp;**row**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-isdict"><strong>isdict</strong></a>(obj)</dt><dd><tt>Check&nbsp;if&nbsp;the&nbsp;given&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;*obj*&nbsp;is&nbsp;a&nbsp;dictionar.</tt></dd></dl>
+ <dl><dt><a name="-isiter"><strong>isiter</strong></a>(obj)</dt><dd><tt>Check&nbsp;if&nbsp;an&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;is&nbsp;iterable.&nbsp;Return&nbsp;True&nbsp;for&nbsp;lists,&nbsp;tuples,<br>
+dictionaries&nbsp;and&nbsp;numpy&nbsp;arrays&nbsp;(all&nbsp;objects&nbsp;that&nbsp;possess&nbsp;an&nbsp;__iter__<br>
+method).&nbsp;&nbsp;Return&nbsp;False&nbsp;for&nbsp;scalars&nbsp;(float,&nbsp;int,&nbsp;etc.),&nbsp;strings,&nbsp;bool&nbsp;and<br>
+None.</tt></dd></dl>
+ <dl><dt><a name="-locd"><strong>locd</strong></a>(list_of_dicts, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;list&nbsp;of&nbsp;dictionaries,&nbsp;where<br>
+each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;**column**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-locl"><strong>locl</strong></a>(list_of_lists, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;list&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each&nbsp;list<br>
+represents&nbsp;a&nbsp;**column**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-lord"><strong>lord</strong></a>(list_of_dicts, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;list&nbsp;of&nbsp;dictionaries,&nbsp;where<br>
+each&nbsp;dictionary&nbsp;represents&nbsp;a&nbsp;**row**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+ <dl><dt><a name="-lorl"><strong>lorl</strong></a>(list_of_lists, **kwargs)</dt><dd><tt>Return&nbsp;table&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;list&nbsp;of&nbsp;lists,&nbsp;where&nbsp;each&nbsp;list<br>
+represents&nbsp;a&nbsp;**row**.&nbsp;Keyword&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;to<br>
+:py:meth:`<a href="#Table">Table</a>.make`.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DEFAULT_ALIGN</strong> = 'left'</td></tr></table>
+</body></html>

@@ -59,7 +59,7 @@ functions exist:
         dictionary of dictionaries, where each dictionary represents a named
         row
 
-There are no ambitions to implement any sorting or filter options.  Data
+There are no ambitions to implement any sorting or filtering options.  Data
 structures have to be passed already in an ordered way. Tip: In the case of
 dictionaries, :class:`collections.OrderedDict` can be used to force a certain
 row or column order.

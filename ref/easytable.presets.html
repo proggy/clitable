@@ -1,0 +1,54 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module easytable.presets</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="easytable.html"><font color="#ffffff">easytable</font></a>.presets</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/djung/lib/easytable/presets.py">/home/djung/lib/easytable/presets.py</a></font></td></tr></table>
+    <p><tt>This&nbsp;module&nbsp;contains&nbsp;presets&nbsp;for&nbsp;formatting&nbsp;tables.<br>
+&nbsp;<br>
+The&nbsp;presets&nbsp;are&nbsp;dictionaries&nbsp;which&nbsp;contain&nbsp;keyword&nbsp;arguments.&nbsp;To&nbsp;apply&nbsp;a<br>
+preset,&nbsp;the&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;user's&nbsp;choice&nbsp;has&nbsp;to&nbsp;be&nbsp;passed&nbsp;to<br>
+:py:meth:`easytable.Table.make`&nbsp;or&nbsp;one&nbsp;of&nbsp;the&nbsp;shortcut&nbsp;functions<br>
+:func:`easytable.autotable`&nbsp;using&nbsp;a&nbsp;double-star&nbsp;notation&nbsp;(**),<br>
+:func:`easytable.docl`&nbsp;etc.&nbsp;Example:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;data&nbsp;=&nbsp;dict(a=[1,&nbsp;2,&nbsp;3],&nbsp;b=[1,&nbsp;2],&nbsp;c=[1])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;print&nbsp;easytable.docl(d,&nbsp;coltitles=1,&nbsp;**easytable.presets.asciielegant)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;===========<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;c&nbsp;&nbsp;&nbsp;b<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;===========</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>asciibox</strong> = {'hb': '-', 'hp': 1, 'vb': '|'}<br>
+<strong>asciicross</strong> = {'border': '', 'hc': '|', 'hp': 1, 'ht': '|', 'vc': '-', 'vt': '-'}<br>
+<strong>asciicross2</strong> = {'border': '', 'hc': '|', 'hp': 1, 'ht': '|', 'vc': '-', 'vt': '='}<br>
+<strong>asciidense</strong> = {'hb': '=', 'hc': '|', 'hp': 1, 'ht': '|', 'vb': '|', 'vc': '-', 'vt': '='}<br>
+<strong>asciielegant</strong> = {'hb': '=', 'hp': 1, 'vt': '-'}<br>
+<strong>asciiheader</strong> = {'hb': '-', 'hp': 1, 'ht': '|', 'vb': '|', 'vt': '-'}<br>
+<strong>asciimatrix</strong> = {'hb': '-', 'hc': '|', 'hp': 1, 'ht': '|', 'vb': '|', 'vc': '-', 'vt': '-'}<br>
+<strong>box</strong> = {'border': 'l', 'hp': 1}<br>
+<strong>cross</strong> = {'border': '', 'hc': 'l', 'hp': 1, 'ht': 'l', 'vc': 'l', 'vt': 'l'}<br>
+<strong>cross2</strong> = {'border': '', 'hc': 'l', 'hp': 1, 'ht': 'd', 'vc': 'l', 'vt': 'd'}<br>
+<strong>dense</strong> = {'border': 'h', 'hc': 'l', 'hp': 1, 'ht': 'd', 'vc': 'l', 'vt': 'd'}<br>
+<strong>doublebox</strong> = {'border': 'd', 'hp': 1}<br>
+<strong>elegant</strong> = {'hb': 'd', 'hp': 1, 'vt': 'l'}<br>
+<strong>elegant2</strong> = {'hb': 'h', 'hp': 1, 'vt': 'l'}<br>
+<strong>fatbox</strong> = {'border': 'h', 'hp': 1}<br>
+<strong>header</strong> = {'border': 'l', 'hp': 1, 'ht': 'l', 'vt': 'l'}<br>
+<strong>matrix</strong> = {'border': 'l', 'hc': 'l', 'hp': 1, 'ht': 'l', 'vc': 'l', 'vt': 'l'}<br>
+<strong>plain</strong> = {'border': '', 'hc': ' ', 'ht': ' ', 'padding': 0, 'vc': '', 'vt': ''}</td></tr></table>
+</body></html>
