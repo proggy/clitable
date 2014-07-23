@@ -1,5 +1,5 @@
-table
-=====
+easytable
+=========
 
 Create table representations from various data structures, using either simple
 ASCII characters or unicode box-drawing characters.
