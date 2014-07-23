@@ -1374,8 +1374,9 @@ class Table(object):
         if borderleft:
             row += borderleft
         if rowtitles:
+            rowtitlescolwidth = self.rowtitlescolwidth()
             row += ' '*paddingleft
-            row += str(rowtitle)
+            row += str(rowtitle).ljust(rowtitlescolwidth)
             row += ' '*paddingright
             row += ht
 
