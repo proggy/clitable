@@ -1,0 +1,10 @@
+
+# Change Log
+
+## 0.2.1
+
+- rename project easytable --> clitable (due to name conflict on PyPI)
+
+## 0.2.0
+
+- make py3-compatible

@@ -74,7 +74,7 @@ presets can be found in the submodule :mod:`~clitable.presets`.
 At the moment, there are no ambitions to implement any sorting or filtering
 options.  Data structures must be sorted and filtered beforehand.
 """
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 DEFAULT_ALIGN = 'left'
 
