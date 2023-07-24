@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Copyright notice
 # ----------------
 #
-# Copyright (C) 2014 Daniel Jung
-# Contact: djungbremen@gmail.com
+# Copyright (C) 2014-2023 Daniel Jung
+# Contact: proggy-contact@mailbox.org
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
