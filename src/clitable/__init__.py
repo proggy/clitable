@@ -69,7 +69,7 @@ construct the table by hand.  The method :meth:`Table.make` offers a lot of
 options to format the table. For a complete list, refer to the documentation of
 :meth:`Table.make`. The respective keyword arguments can also be passed through
 the shortcut functions :func:`autotable`, :func:`docl` etc. A few formatting
-presets can be found in the submodule :mod:`~easytable.presets`.
+presets can be found in the submodule :mod:`~clitable.presets`.
 
 At the moment, there are no ambitions to implement any sorting or filtering
 options.  Data structures must be sorted and filtered beforehand.

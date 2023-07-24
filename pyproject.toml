@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "easytable"
+name = "clitable"
 version = "0.2.0"
 authors = [
   { name="Daniel Jung", email="proggy-contact@mailbox.org" },
@@ -21,6 +21,6 @@ classifiers = [
 ]
 
 [project.urls]
-"Source" = "https://github.com/proggy/easytable"
-"Homepage" = "https://github.com/proggy/easytable"
-"Bug Tracker" = "https://github.com/proggy/easytable/issues"
+"Source" = "https://github.com/proggy/clitable"
+"Homepage" = "https://github.com/proggy/clitable"
+"Bug Tracker" = "https://github.com/proggy/clitable/issues"
