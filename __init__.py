@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Copyright notice
 # ----------------
 #
-# Copyright (C) 2014 Daniel Jung
-# Contact: djungbremen@gmail.com
+# Copyright (C) 2014-2023 Daniel Jung
+# Contact: proggy-contact@mailbox.org
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -72,86 +72,17 @@ the shortcut functions :func:`autotable`, :func:`docl` etc. A few formatting
 presets can be found in the submodule :mod:`~easytable.presets`.
 
 At the moment, there are no ambitions to implement any sorting or filtering
-options.  Data structures have to be passed in an already ordered way. **Tip:**
-In the case of dictionaries, the class :class:`collections.OrderedDict` can be
-used to force a certain row or column order in the table output."""
-#
-# 2013-08-12 - 2013-08-13
-
-import presets
-
+options.  Data structures must be sorted and filtered beforehand.
 """
-
-Conceptual thoughts
--------------------
-
-Which possibilities do we have?
-
-Say, a list of lists is given. What can we do with it to present it in a
-reasonable way?
---> Either it is a list of rows or a list of columns.    locl, lorl
-
-Then, if a list of dictionaries is given, what can we do?
---> Either it is a list of rows, with names columns, or a list of columns, with
-    named rows.                                          lord, locd
-
-How about a dictionary of lists?
---> Either it is a dictionary of named rows or a dictionary of named columns.
-                                                         dorl, docl
-
-If a dictionary of dictionaries is given:
---> Dictionary of named rows, for which the columns are named as well.
-                                                         dord, docd
-
-If only one dictionary is given, and the keys are 2-tuples:
---> Each 2-tuple contains the names of row and of column (like indices), and
-    the data is arranged accordingly in a sparse matrix style.
-                                                         do2t
-
-If three lists are given, the first could contain the row index, the second the
-column index, and the third the respective data value.
-
-Sets can be treated like lists, but the elements will be unordered. (The
-responsibility remains with the user to first make a sorted list out of it.)
-Frozen sets and tuples are of course treated like their ``unfrozen''
-counterparts.
-
-There could be a general function "autotable" that chooses an appropriate table
-format automatically for a given data structure.
-
-All functions return just the string that would draw the table on the screen if
-printed. The terminal width can be set to cut the table.
-
-Could colors play some role? Should the module :mod:`ansicolor` be used to
-compute the actual length of the strings? (unwanted dependency...)
-
-A remapping of the row and column titles could be done.
-
-A LaTeX output mode could be implemented (as well as a HTML mode).
-
-Numbers should be formattable and right-aligned.
-
-There could be support to print tree-like (hierarchical) data structures
-(although it is not really a table).
-
-Think about configurable row and column separators, major as well as minor
-ones, margin and padding, and frames.
-
-Option to print titles in uppercase? No, the user can do that himself.
-
-collections.OrderedDict can be used to force a specific row or column order
-when using dictionaries. No sorting options are neccessary.
-
-"""
-
+__version__ = '0.2.0'
 
 DEFAULT_ALIGN = 'left'
-
 
 def autotable(data_structure, **kwargs):
     """Generate table representation of the given data structure. Choose one of
     the specialized functions *docl*, *dorl*, etc. based on the given data
-    structure. Keyword arguments are passed to :py:meth:`Table.make`."""
+    structure. Keyword arguments are passed to :py:meth:`Table.make`.
+    """
     if isdict(data_structure):
         if alldict(data_structure.values()):
             # decide if rowwise or columnwise is best
@@ -200,10 +131,11 @@ def autotable(data_structure, **kwargs):
 def docl(dict_of_lists, **kwargs):
     """Return table representation of the given dictionary of lists, where each
     list represents a named **column**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
 
     table = Table()
-    for title, data in dict_of_lists.iteritems():
+    for title, data in dict_of_lists.items():
         table.append_column(data, title)
     return table.make(**kwargs)
 
@@ -211,10 +143,11 @@ def docl(dict_of_lists, **kwargs):
 def dorl(dict_of_lists, **kwargs):
     """Return table representation of the given dictionary of lists, where each
     list represents a named **row**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
 
     table = Table()
-    for title, data in dict_of_lists.iteritems():
+    for title, data in dict_of_lists.items():
         table.append_row(data, title)
     return table.make(**kwargs)
 
@@ -222,7 +155,8 @@ def dorl(dict_of_lists, **kwargs):
 def locl(list_of_lists, **kwargs):
     """Return table representation of the given list of lists, where each list
     represents a **column**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
 
     table = Table()
     for data in list_of_lists:
@@ -233,7 +167,8 @@ def locl(list_of_lists, **kwargs):
 def lorl(list_of_lists, **kwargs):
     """Return table representation of the given list of lists, where each list
     represents a **row**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
 
     table = Table()
     for data in list_of_lists:
@@ -244,7 +179,8 @@ def lorl(list_of_lists, **kwargs):
 def locd(list_of_dicts, **kwargs):
     """Return table representation of the given list of dictionaries, where
     each dictionary represents a **column**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
     allrowtitles = []
     for coldata in list_of_dicts:
         for rowtitle in coldata.keys():
@@ -263,7 +199,8 @@ def locd(list_of_dicts, **kwargs):
 def lord(list_of_dicts, **kwargs):
     """Return table representation of the given list of dictionaries, where
     each dictionary represents a **row**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
     allcoltitles = []
     for rowdata in list_of_dicts:
         for coltitle in rowdata.keys():
@@ -282,7 +219,8 @@ def lord(list_of_dicts, **kwargs):
 def docd(dict_of_dicts, **kwargs):
     """Return table representation of the given dictionary of dictionaries,
     where each dictionary represents a **column**. Keyword arguments are passed
-    to :py:meth:`Table.make`."""
+    to :py:meth:`Table.make`.
+    """
     allrowtitles = []
     for coldata in dict_of_dicts.values():
         for rowtitle in coldata.keys():
@@ -290,9 +228,9 @@ def docd(dict_of_dicts, **kwargs):
                 allrowtitles.append(rowtitle)
     table = Table()
     allcoltitles = dict_of_dicts.keys()
-    for colind, (coltitle, coldata) in enumerate(dict_of_dicts.iteritems()):
+    for colind, (coltitle, coldata) in enumerate(dict_of_dicts.items()):
         table.coltitles[colind] = coltitle
-        for rowtitle, celldata in coldata.iteritems():
+        for rowtitle, celldata in coldata.items():
             rowind = allrowtitles.index(rowtitle)
             table.insert_cell((rowind, colind), celldata)
     for rowind, rowtitle in enumerate(allrowtitles):
@@ -303,7 +241,8 @@ def docd(dict_of_dicts, **kwargs):
 def dord(dict_of_dicts, **kwargs):
     """Return table representation of the given dictionary of dictionaries,
     where each dictionary represents a **row**. Keyword arguments are passed to
-    :py:meth:`Table.make`."""
+    :py:meth:`Table.make`.
+    """
     allcoltitles = []
     for rowdata in dict_of_dicts.values():
         for coltitle in rowdata.keys():
@@ -311,9 +250,9 @@ def dord(dict_of_dicts, **kwargs):
                 allcoltitles.append(coltitle)
     table = Table()
     allrowtitles = dict_of_dicts.keys()
-    for rowind, (rowtitle, rowdata) in enumerate(dict_of_dicts.iteritems()):
+    for rowind, (rowtitle, rowdata) in enumerate(dict_of_dicts.items()):
         table.rowtitles[rowind] = rowtitle
-        for coltitle, celldata in rowdata.iteritems():
+        for coltitle, celldata in rowdata.items():
             colind = allcoltitles.index(coltitle)
             table.insert_cell((rowind, colind), celldata)
     for colind, coltitle in enumerate(allcoltitles):
@@ -325,15 +264,15 @@ def isiter(obj):
     """Check if an object is iterable. Return True for lists, tuples,
     dictionaries and numpy arrays (all objects that possess an __iter__
     method).  Return False for scalars (float, int, etc.), strings, bool and
-    None."""
-    # 2011-09-13 - 2014-07-20
+    None.
+    """
     # copied from tb.misc.isiterable on 2014-07-10
     # former tb.isiterable from 2011-01-27
     # former mytools.isiterable
     # Initial idea from
     # http://bytes.com/topic/python/answers/514838-how-test-if-object-sequence-
     # iterable:
-    # return isinstance(obj, basestring) or getattr(obj, '__iter__', False)
+    # return isinstance(obj, str) or getattr(obj, '__iter__', False)
     # I found this to be better:
     return not getattr(obj, '__iter__', False) is False
 
@@ -346,7 +285,8 @@ def alliter(seq):
 
 
 def isdict(obj):
-    """Check if the given object *obj* is a dictionary."""
+    """Check if the given object *obj* is a dictionary.
+    """
     return hasattr(obj, 'iteritems')
 
 
@@ -361,7 +301,8 @@ class items_of(object):
     """Instances of this class are callables which get a certain item of each
     element of a given iterable, and returns all items in form of a new
     iterable. If item does not exist and a default value is given, return that
-    value."""
+    value.
+    """
     # copied from frog.items_of on 2014-07-10
 
     def __init__(self, itemname, default=None, dtype=None):
@@ -386,7 +327,8 @@ class items_of(object):
 
 def all_of_type(seq, dtype):
     """Check if all items of the given sequence *seq* are of the type
-    *dtype*. *dtype* can also be a list of possible types."""
+    *dtype*. *dtype* can also be a list of possible types.
+    """
     for item in seq:
         if not isinstance(item, dtype):
             return False
@@ -394,7 +336,8 @@ def all_of_type(seq, dtype):
 
 
 class CellDict(dict):
-    """A mapping ``(row index, column index) --> cell object``."""
+    """A mapping ``(row index, column index) --> cell object``.
+    """
 
     def __init__(self, mapping_or_iterable=None, **kwargs):
         self._check_mapping_or_iterable(kwargs)
@@ -428,7 +371,7 @@ class CellDict(dict):
 
     def _check_mapping_or_iterable(self, mapping_or_iterable):
         if isinstance(mapping_or_iterable, dict):
-            for key, value in mapping_or_iterable.iteritems():
+            for key, value in mapping_or_iterable.items():
                 self._check_key(key)
                 self._check_value(value)
         else:
@@ -438,16 +381,18 @@ class CellDict(dict):
 
     def index(self, cell):
         """Return indices (row, column) of the given cell object. Raise
-        ValueError if the cell is not present."""
+        ValueError if the cell is not present.
+        """
         if cell not in self.values():
-            raise ValueError('%s is not in %s' % (cell, self))
-        for inds, c in self.iteritems():
+            raise ValueError(f'{cell} is not in {self}')
+        for inds, c in self.items():
             if c is cell:
                 return inds
 
 
 class TitleDict(dict):
-    """A mapping ``integer --> title``. Keys must be integer."""
+    """A mapping ``integer --> title``. Keys must be integer.
+    """
 
     def __init__(self, mapping_or_iterable=None, **kwargs):
         self._check_mapping_or_iterable(kwargs)
@@ -467,7 +412,7 @@ class TitleDict(dict):
 
     def _check_mapping_or_iterable(self, mapping_or_iterable):
         if isinstance(mapping_or_iterable, dict):
-            for key, value in mapping_or_iterable.iteritems():
+            for key, value in mapping_or_iterable.items():
                 self._check_key(key)
         else:
             for key, value in mapping_or_iterable:
@@ -476,7 +421,8 @@ class TitleDict(dict):
 
 class AlignDict(dict):
     """A mapping ``integer --> string``. Keys must be integer, values must be
-    one of the strings "left", "right", "center", or "point"."""
+    one of the strings "left", "right", "center", or "point".
+    """
 
     def __init__(self, mapping_or_iterable=None, **kwargs):
         self._check_mapping_or_iterable(kwargs)
@@ -498,14 +444,14 @@ class AlignDict(dict):
     def _check_value(self, value):
         msg = 'value must be one of the strings "left", "right", ' + \
               '"center", or "point"'
-        if not isinstance(value, basestring):
+        if not isinstance(value, str):
             raise TypeError(msg)
         if value not in ['left', 'right', 'center', 'point']:
             raise ValueError(msg)
 
     def _check_mapping_or_iterable(self, mapping_or_iterable):
         if isinstance(mapping_or_iterable, dict):
-            for key, value in mapping_or_iterable.iteritems():
+            for key, value in mapping_or_iterable.items():
                 self._check_key(key)
                 self._check_value(value)
         else:
@@ -575,7 +521,8 @@ class Table(object):
 
     def size(self):
         """Return size of the table in the form (number of rows, number of
-        columns), excluding titles."""
+        columns), excluding titles.
+        """
         rowinds, colinds = self.rowinds_and_colinds()
         h = max(rowinds) - min(rowinds) + 1 if rowinds else 0
         w = max(colinds) - min(colinds) + 1 if colinds else 0
@@ -622,23 +569,26 @@ class Table(object):
 
     def column(self, index):
         out = []
-        for (r, c), cell in self.cells.iteritems():
+        for (r, c), cell in self.cells.items():
+            #print(r, c, cell, type(cell))
             if c == index:
                 out.append(cell)
-        out.sort(key=lambda cell: cell.row)
+        #out.sort(key=lambda cell: cell.row)  # why?
         return out
 
     def row(self, index):
         out = []
-        for (r, c), cell in self.cells.iteritems():
+        for (r, c), cell in self.cells.items():
             if r == index:
                 out.append(cell)
-        out.sort(key=lambda cell: cell.column)
+        #out.sort(key=lambda cell: cell.column)  # why?
         return out
 
-    def insert_cell(self, (row, column), data=None):
-        c = Cell(self, (row, column), data=data)
-        self.cells[(row, column)] = c
+    def insert_cell(self, row_col, data=None):
+        """row_col : 2-tuple of ints
+        """
+        c = Cell(self, row_col, data=data)
+        self.cells[row_col] = c
 
     def insert_column(self, index, data, title=None, align=None, startrow=0):
         colind = index
@@ -711,95 +661,95 @@ class Table(object):
     _mergebottom = _mergedefault.copy()
     _mergecenter = _mergedefault.copy()
 
-    _pieces_light_horizontal = [unichr(9474), unichr(9478),
-                                unichr(9482), unichr(9550)]
-    _pieces_light_vertical = [unichr(9472), unichr(9476),
-                              unichr(9480), unichr(9548)]
-    _pieces_heavy_horizontal = [unichr(9475), unichr(9479),
-                                unichr(9483), unichr(9551)]
-    _pieces_heavy_vertical = [unichr(9473), unichr(9477),
-                              unichr(9481), unichr(9549)]
-    _pieces_double_horizontal = [unichr(9553)]
-    _pieces_double_vertical = [unichr(9552)]
+    _pieces_light_horizontal = [chr(9474), chr(9478),
+                                chr(9482), chr(9550)]
+    _pieces_light_vertical = [chr(9472), chr(9476),
+                              chr(9480), chr(9548)]
+    _pieces_heavy_horizontal = [chr(9475), chr(9479),
+                                chr(9483), chr(9551)]
+    _pieces_heavy_vertical = [chr(9473), chr(9477),
+                              chr(9481), chr(9549)]
+    _pieces_double_horizontal = [chr(9553)]
+    _pieces_double_vertical = [chr(9552)]
 
     for hpiece in _pieces_light_horizontal:
         for vpiece in _pieces_light_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9484)
-            _mergetopright[(hpiece, vpiece)] = unichr(9488)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9492)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9496)
-            _mergeleft[(hpiece, vpiece)] = unichr(9500)
-            _mergeright[(hpiece, vpiece)] = unichr(9508)
-            _mergetop[(hpiece, vpiece)] = unichr(9516)
-            _mergebottom[(hpiece, vpiece)] = unichr(9524)
-            _mergecenter[(hpiece, vpiece)] = unichr(9532)
+            _mergetopleft[(hpiece, vpiece)] = chr(9484)
+            _mergetopright[(hpiece, vpiece)] = chr(9488)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9492)
+            _mergebottomright[(hpiece, vpiece)] = chr(9496)
+            _mergeleft[(hpiece, vpiece)] = chr(9500)
+            _mergeright[(hpiece, vpiece)] = chr(9508)
+            _mergetop[(hpiece, vpiece)] = chr(9516)
+            _mergebottom[(hpiece, vpiece)] = chr(9524)
+            _mergecenter[(hpiece, vpiece)] = chr(9532)
     for hpiece in _pieces_light_horizontal:
         for vpiece in _pieces_heavy_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9485)
-            _mergetopright[(hpiece, vpiece)] = unichr(9489)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9493)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9497)
-            _mergeleft[(hpiece, vpiece)] = unichr(9501)
-            _mergeright[(hpiece, vpiece)] = unichr(9509)
-            _mergetop[(hpiece, vpiece)] = unichr(9519)
-            _mergebottom[(hpiece, vpiece)] = unichr(9527)
-            _mergecenter[(hpiece, vpiece)] = unichr(9535)
+            _mergetopleft[(hpiece, vpiece)] = chr(9485)
+            _mergetopright[(hpiece, vpiece)] = chr(9489)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9493)
+            _mergebottomright[(hpiece, vpiece)] = chr(9497)
+            _mergeleft[(hpiece, vpiece)] = chr(9501)
+            _mergeright[(hpiece, vpiece)] = chr(9509)
+            _mergetop[(hpiece, vpiece)] = chr(9519)
+            _mergebottom[(hpiece, vpiece)] = chr(9527)
+            _mergecenter[(hpiece, vpiece)] = chr(9535)
     for hpiece in _pieces_heavy_horizontal:
         for vpiece in _pieces_light_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9486)
-            _mergetopright[(hpiece, vpiece)] = unichr(9490)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9494)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9498)
-            _mergeleft[(hpiece, vpiece)] = unichr(9504)
-            _mergeright[(hpiece, vpiece)] = unichr(9512)
-            _mergetop[(hpiece, vpiece)] = unichr(9520)
-            _mergebottom[(hpiece, vpiece)] = unichr(9528)
-            _mergecenter[(hpiece, vpiece)] = unichr(9538)
+            _mergetopleft[(hpiece, vpiece)] = chr(9486)
+            _mergetopright[(hpiece, vpiece)] = chr(9490)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9494)
+            _mergebottomright[(hpiece, vpiece)] = chr(9498)
+            _mergeleft[(hpiece, vpiece)] = chr(9504)
+            _mergeright[(hpiece, vpiece)] = chr(9512)
+            _mergetop[(hpiece, vpiece)] = chr(9520)
+            _mergebottom[(hpiece, vpiece)] = chr(9528)
+            _mergecenter[(hpiece, vpiece)] = chr(9538)
     for hpiece in _pieces_heavy_horizontal + _pieces_double_horizontal:
         for vpiece in _pieces_heavy_vertical + _pieces_double_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9487)
-            _mergetopright[(hpiece, vpiece)] = unichr(9491)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9495)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9499)
-            _mergeleft[(hpiece, vpiece)] = unichr(9507)
-            _mergeright[(hpiece, vpiece)] = unichr(9515)
-            _mergetop[(hpiece, vpiece)] = unichr(9523)
-            _mergebottom[(hpiece, vpiece)] = unichr(9531)
-            _mergecenter[(hpiece, vpiece)] = unichr(9547)
+            _mergetopleft[(hpiece, vpiece)] = chr(9487)
+            _mergetopright[(hpiece, vpiece)] = chr(9491)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9495)
+            _mergebottomright[(hpiece, vpiece)] = chr(9499)
+            _mergeleft[(hpiece, vpiece)] = chr(9507)
+            _mergeright[(hpiece, vpiece)] = chr(9515)
+            _mergetop[(hpiece, vpiece)] = chr(9523)
+            _mergebottom[(hpiece, vpiece)] = chr(9531)
+            _mergecenter[(hpiece, vpiece)] = chr(9547)
 
     for hpiece in _pieces_double_horizontal:
         for vpiece in _pieces_double_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9556)
-            _mergetopright[(hpiece, vpiece)] = unichr(9559)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9562)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9565)
-            _mergeleft[(hpiece, vpiece)] = unichr(9568)
-            _mergeright[(hpiece, vpiece)] = unichr(9571)
-            _mergetop[(hpiece, vpiece)] = unichr(9574)
-            _mergebottom[(hpiece, vpiece)] = unichr(9577)
-            _mergecenter[(hpiece, vpiece)] = unichr(9580)
+            _mergetopleft[(hpiece, vpiece)] = chr(9556)
+            _mergetopright[(hpiece, vpiece)] = chr(9559)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9562)
+            _mergebottomright[(hpiece, vpiece)] = chr(9565)
+            _mergeleft[(hpiece, vpiece)] = chr(9568)
+            _mergeright[(hpiece, vpiece)] = chr(9571)
+            _mergetop[(hpiece, vpiece)] = chr(9574)
+            _mergebottom[(hpiece, vpiece)] = chr(9577)
+            _mergecenter[(hpiece, vpiece)] = chr(9580)
     for hpiece in _pieces_double_horizontal:
         for vpiece in _pieces_light_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9555)
-            _mergetopright[(hpiece, vpiece)] = unichr(9558)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9561)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9564)
-            _mergeleft[(hpiece, vpiece)] = unichr(9567)
-            _mergeright[(hpiece, vpiece)] = unichr(9570)
-            _mergetop[(hpiece, vpiece)] = unichr(9573)
-            _mergebottom[(hpiece, vpiece)] = unichr(9576)
-            _mergecenter[(hpiece, vpiece)] = unichr(9579)
+            _mergetopleft[(hpiece, vpiece)] = chr(9555)
+            _mergetopright[(hpiece, vpiece)] = chr(9558)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9561)
+            _mergebottomright[(hpiece, vpiece)] = chr(9564)
+            _mergeleft[(hpiece, vpiece)] = chr(9567)
+            _mergeright[(hpiece, vpiece)] = chr(9570)
+            _mergetop[(hpiece, vpiece)] = chr(9573)
+            _mergebottom[(hpiece, vpiece)] = chr(9576)
+            _mergecenter[(hpiece, vpiece)] = chr(9579)
     for hpiece in _pieces_light_horizontal:
         for vpiece in _pieces_double_vertical:
-            _mergetopleft[(hpiece, vpiece)] = unichr(9554)
-            _mergetopright[(hpiece, vpiece)] = unichr(9557)
-            _mergebottomleft[(hpiece, vpiece)] = unichr(9560)
-            _mergebottomright[(hpiece, vpiece)] = unichr(9563)
-            _mergeleft[(hpiece, vpiece)] = unichr(9566)
-            _mergeright[(hpiece, vpiece)] = unichr(9569)
-            _mergetop[(hpiece, vpiece)] = unichr(9572)
-            _mergebottom[(hpiece, vpiece)] = unichr(9575)
-            _mergecenter[(hpiece, vpiece)] = unichr(9578)
+            _mergetopleft[(hpiece, vpiece)] = chr(9554)
+            _mergetopright[(hpiece, vpiece)] = chr(9557)
+            _mergebottomleft[(hpiece, vpiece)] = chr(9560)
+            _mergebottomright[(hpiece, vpiece)] = chr(9563)
+            _mergeleft[(hpiece, vpiece)] = chr(9566)
+            _mergeright[(hpiece, vpiece)] = chr(9569)
+            _mergetop[(hpiece, vpiece)] = chr(9572)
+            _mergebottom[(hpiece, vpiece)] = chr(9575)
+            _mergecenter[(hpiece, vpiece)] = chr(9578)
 
     def _merge(self, hsep, vsep, pos='center'):
         if not hsep:
@@ -1002,34 +952,34 @@ class Table(object):
             bordertop = border
             borderbottom = border
 
-        if not isinstance(hc, basestring) or len(hc) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(vc, basestring) or len(vc) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(ht, basestring) or len(ht) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(vt, basestring) or len(vt) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(borderleft, basestring) or len(borderleft) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(borderright, basestring) or len(borderright) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(bordertop, basestring) or len(bordertop) > 1:
-            raise ValueError, 'must be a string no longer than one character'
-        if not isinstance(borderbottom, basestring) or len(borderbottom) > 1:
-            raise ValueError, 'must be a string no longer than one character'
+        if not isinstance(hc, str) or len(hc) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(vc, str) or len(vc) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(ht, str) or len(ht) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(vt, str) or len(vt) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(borderleft, str) or len(borderleft) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(borderright, str) or len(borderright) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(bordertop, str) or len(bordertop) > 1:
+            raise ValueError('must be a string no longer than one character')
+        if not isinstance(borderbottom, str) or len(borderbottom) > 1:
+            raise ValueError('must be a string no longer than one character')
 
         # interpret shortcuts for unicode box drawing characters
-        _boxchars_horizontal = {'l': unichr(9472), 'h': unichr(9473),
-                                'd': unichr(9552), '2': unichr(9548),
-                                'u': unichr(9549), '3': unichr(9476),
-                                't': unichr(9477), '4': unichr(9480),
-                                'q': unichr(9481)}
-        _boxchars_vertical = {'l': unichr(9474), 'h': unichr(9475),
-                              'd': unichr(9553), '2': unichr(9550),
-                              'u': unichr(9551), '3': unichr(9478),
-                              't': unichr(9479), '4': unichr(9482),
-                              'q': unichr(9483)}
+        _boxchars_horizontal = {'l': chr(9472), 'h': chr(9473),
+                                'd': chr(9552), '2': chr(9548),
+                                'u': chr(9549), '3': chr(9476),
+                                't': chr(9477), '4': chr(9480),
+                                'q': chr(9481)}
+        _boxchars_vertical = {'l': chr(9474), 'h': chr(9475),
+                              'd': chr(9553), '2': chr(9550),
+                              'u': chr(9551), '3': chr(9478),
+                              't': chr(9479), '4': chr(9482),
+                              'q': chr(9483)}
         hc = _boxchars_vertical.get(str(hc), hc)
         ht = _boxchars_vertical.get(str(ht), ht)
         vc = _boxchars_horizontal.get(str(vc), vc)
@@ -1058,27 +1008,27 @@ class Table(object):
         # automatically infer alignment from data
         colalign = self.colalign
         if autoalign:
-            for colind in xrange(startcol, endcol+1):
+            for colind in range(startcol, endcol+1):
                 if colind in colalign:
                     continue
                 cells = self.column(colind)
                 data = [cell.data for cell in cells]
                 if all_of_type(data, float):
                     colalign[colind] = 'point'
-                elif all_of_type(data, (int, float, long, complex)):
+                elif all_of_type(data, (int, float, complex)):
                     colalign[colind] = 'right'
 
         # create matrix of table cells
         allcolstrings = [self.colstrings(colind, withtitle=coltitles,
                                          colalign=colalign)
-                         for colind in xrange(startcol, endcol+1)]
+                         for colind in range(startcol, endcol+1)]
 
         # change datastructure to represent a list of rows instead of a list of
         # columns
         allrowstrings = []
-        for r in xrange(len(allcolstrings[0])):
+        for r in range(len(allcolstrings[0])):
             rowstrings = []
-            for c in xrange(len(allcolstrings)):
+            for c in range(len(allcolstrings)):
                 rowstrings.append(allcolstrings[c][r])
             allrowstrings.append(rowstrings)
 
@@ -1095,7 +1045,7 @@ class Table(object):
         # column titles
         colwidths = self.colwidths(withtitle=coltitles, colalign=colalign)
         if coltitles:
-            for i in xrange(paddingtop):
+            for i in range(paddingtop):
                 row = self._padrow(rowtitles, borderleft, borderright,
                                    paddingleft, paddingright, hc, ht,
                                    colwidths)
@@ -1104,7 +1054,7 @@ class Table(object):
                                             borderright, paddingleft,
                                             paddingright, hc, ht)
             rows.append(row)
-            for i in xrange(paddingtop):
+            for i in range(paddingtop):
                 row = self._padrow(rowtitles, borderleft, borderright,
                                    paddingleft, paddingright, hc, ht,
                                    colwidths)
@@ -1121,7 +1071,7 @@ class Table(object):
             rowtitle = self.rowtitles.get(self.top(), ' '*rowtitlescolwidth)
             if not rowtitle:
                 rowtitle = ' '*rowtitlescolwidth
-            for i in xrange(paddingtop):
+            for i in range(paddingtop):
                 row = self._padrow(rowtitles, borderleft, borderright,
                                    paddingleft, paddingright, hc, ht,
                                    colwidths)
@@ -1130,7 +1080,7 @@ class Table(object):
                                       borderright, rowtitles, paddingleft,
                                       paddingright, hc, ht)
             rows.append(row)
-            for i in xrange(paddingtop):
+            for i in range(paddingtop):
                 row = self._padrow(rowtitles, borderleft, borderright,
                                    paddingleft, paddingright, hc, ht,
                                    colwidths)
@@ -1144,7 +1094,7 @@ class Table(object):
                                           borderright, paddingleft,
                                           paddingright, vc, hc, ht)
                 rows.append(row)
-            for i in xrange(paddingtop):
+            for i in range(paddingtop):
                 row = self._padrow(rowtitles, borderleft, borderright,
                                    paddingleft, paddingright, hc, ht,
                                    colwidths)
@@ -1153,7 +1103,7 @@ class Table(object):
                                       borderright, rowtitles, paddingleft,
                                       paddingright, hc, ht)
             rows.append(row)
-            for i in xrange(paddingtop):
+            for i in range(paddingtop):
                 row = self._padrow(rowtitles, borderleft, borderright,
                                    paddingleft, paddingright, hc, ht,
                                    colwidths)
@@ -1169,7 +1119,7 @@ class Table(object):
 
         # cut rows according to terminal width
         if width is not None:
-            for i in xrange(len(rows)):
+            for i in range(len(rows)):
                 rows[i] = rows[i][:width]
 
         # return complete string representation of the table
@@ -1178,7 +1128,8 @@ class Table(object):
     def dimensions(self, **kwargs):
         """Get table dimensions (the space needed to print the table) in the
         form (number of terminal rows, number of terminal columns). All keyword
-        arguments are passed to :py:meth:`Table.make`."""
+        arguments are passed to :py:meth:`Table.make`.
+        """
         strrep = self.make(**kwargs)
         if not strrep:
             return 0, 0
@@ -1406,7 +1357,7 @@ class Table(object):
         end = self.bottom()
         out = []
         rowtitlescolwidth = self.rowtitlescolwidth()
-        for rowind in xrange(start, end+1):
+        for rowind in range(start, end+1):
             if not rowind in self.rowtitles:
                 out.append(' '*rowtitlescolwidth)
                 continue
@@ -1418,7 +1369,7 @@ class Table(object):
         start = self.left()
         end = self.right()
         out = []
-        for colind in xrange(start, end+1):
+        for colind in range(start, end+1):
             colwidth = self.colwidth(colind, withtitle=True, colalign=colalign)
             if not colind in self.coltitles:
                 out.append(' '*colwidth)
@@ -1438,7 +1389,7 @@ class Table(object):
         if align == 'point':
             colwidth_before = self.colwidth_before_point(index)
             colwidth_after = self.colwidth_after_point(index)
-            for rowind in xrange(start, end+1):
+            for rowind in range(start, end+1):
                 if (rowind, index) not in self.cells:
                     out.append(' '*colwidth)
                     continue
@@ -1449,21 +1400,21 @@ class Table(object):
                 point = '.' if '.' in str(cell) else ' '
                 out.append(before + point + after)
         elif align == 'left':
-            for rowind in xrange(start, end+1):
+            for rowind in range(start, end+1):
                 if (rowind, index) not in self.cells:
                     out.append(' '*colwidth)
                     continue
                 cell = self.cells[rowind, index]
                 out.append(str(cell).ljust(colwidth))
         elif align == 'right':
-            for rowind in xrange(start, end+1):
+            for rowind in range(start, end+1):
                 if (rowind, index) not in self.cells:
                     out.append(' '*colwidth)
                     continue
                 cell = self.cells[rowind, index]
                 out.append(str(cell).rjust(colwidth))
         elif align == 'center':
-            for rowind in xrange(start, end+1):
+            for rowind in range(start, end+1):
                 if (rowind, index) not in self.cells:
                     out.append(' '*colwidth)
                     continue
@@ -1500,7 +1451,7 @@ class Table(object):
         start = self.left()
         end = self.right()
         out = []
-        for colind in xrange(start, end+1):
+        for colind in range(start, end+1):
             out.append(self.colwidth(colind, withtitle=withtitle,
                                      colalign=colalign))
         return out
@@ -1510,10 +1461,12 @@ class Cell(object):
 
     _instance_count = 0
 
-    def __init__(self, table, (row, column), data=None):
+    def __init__(self, table, row_col, data=None):
+        """row_col : 2-tuple of ints
+        """
         self._data = data
         self._table = table
-        self.table.cells[(row, column)] = self
+        self.table.cells[row_col] = self
         self._instance_id = self._instance_count
         self.__class__._instance_count += 1
 
@@ -1594,4 +1547,4 @@ class Cell(object):
         return len(parts[0]), len(parts[1])
 
     def __repr__(self):
-        return '<Cell%i>' % self.instance_id
+        return f'<Cell{self.instance_id}>'
